@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=3 uid="uid://ci6gyuemjy6ej"]
+
+[ext_resource type="Script" uid="uid://c4k6dpy34dfbt" path="res://cam.gd" id="1_b14l2"]
+
+[node name="Cam" type="Camera3D" groups=["camera"]]
+fov = 37.8493
+far = 999999.0
+script = ExtResource("1_b14l2")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+offset_right = 30.0
+offset_bottom = 23.0
+text = "test"
+
+[node name="Panel" type="Panel" parent="Label"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label2" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -23.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[connection signal="mouse_entered" from="Control" to="." method="_on_control_mouse_entered"]
+[connection signal="mouse_exited" from="Control" to="." method="_on_control_mouse_exited"]

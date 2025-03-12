@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://bffgqmliomxq6"]
+
+[ext_resource type="Texture2D" uid="uid://dgncjyhhhoifk" path="res://textures/ui/progress_bar.png" id="1_5jajh"]
+[ext_resource type="Script" uid="uid://dll0vwwb6k60b" path="res://global/time_thing.gd" id="1_twtmi"]
+[ext_resource type="Texture2D" uid="uid://c2l5nstioqnq6" path="res://textures/ui/progress_bar_full.png" id="2_qvaxs"]
+
+[node name="TimeThing" type="Control"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("1_twtmi")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+max_value = 9.0
+texture_under = ExtResource("1_5jajh")
+texture_progress = ExtResource("2_qvaxs")

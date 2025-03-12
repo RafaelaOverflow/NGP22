@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://sien8qggqbbe"]
+
+[ext_resource type="Script" uid="uid://bqcl4lmoilbjm" path="res://ui/tech_display.gd" id="1_toix4"]
+[ext_resource type="Texture2D" uid="uid://bmtcigu2ulb8x" path="res://textures/ui/normal.png" id="2_mx3fx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_toix4"]
+bg_color = Color(0.223103, 0.223103, 0.223103, 1)
+
+[node name="TechDisplay" type="PanelContainer"]
+custom_minimum_size = Vector2(150, 100)
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_toix4")
+script = ExtResource("1_toix4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+text = "tech"
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+icon = ExtResource("2_mx3fx")
+icon_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+max_value = 1.0
+step = 0.0
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

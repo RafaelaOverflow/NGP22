@@ -1,0 +1,394 @@
+[gd_scene load_steps=71 format=3 uid="uid://cd5apumrfml4m"]
+
+[ext_resource type="Script" uid="uid://m2u71yjbpcqg" path="res://global/global.gd" id="1_jlmgm"]
+[ext_resource type="Shader" uid="uid://d34an60rewr2v" path="res://global/planet.gdshader" id="2_84sqh"]
+[ext_resource type="PackedScene" uid="uid://d4er7s3jhwuaf" path="res://ui/tile_info_display.tscn" id="3_vt5yb"]
+[ext_resource type="Script" uid="uid://b4g0i85l02pw8" path="res://misc/tech.gd" id="3_yschh"]
+[ext_resource type="PackedScene" uid="uid://bwopsrknkwbd1" path="res://ui/system_creation_menu.tscn" id="4_aewma"]
+[ext_resource type="Script" uid="uid://emjnbe0p1264" path="res://misc/event/event.gd" id="4_dk7jd"]
+[ext_resource type="Texture2D" uid="uid://bxv4esk4ao2kr" path="res://textures/ui/light_bulb.png" id="4_l7tt2"]
+[ext_resource type="Script" uid="uid://djkve73whhkph" path="res://misc/requirement.gd" id="4_rlu6y"]
+[ext_resource type="PackedScene" uid="uid://cnror1i6nfsjt" path="res://ui/main_menu.tscn" id="5_4acp8"]
+[ext_resource type="Texture2D" uid="uid://drfhb7sbeqltx" path="res://textures/ui/camera_follow.png" id="5_803q2"]
+[ext_resource type="Script" uid="uid://663fqonck66p" path="res://misc/requirement/tech_requirement_tech.gd" id="5_rlu6y"]
+[ext_resource type="PackedScene" uid="uid://bm5ejfd04g7ba" path="res://ui/polities_display.tscn" id="5_sgetp"]
+[ext_resource type="Texture2D" uid="uid://cvwkwbph44ltl" path="res://textures/ui/atmosphere.png" id="6_5yjsk"]
+[ext_resource type="PackedScene" uid="uid://hns21l22glpt" path="res://ui/map_select.tscn" id="6_ery7i"]
+[ext_resource type="Script" uid="uid://c6ngg4iut2v73" path="res://misc/event/add_building_event.gd" id="7_7vvuh"]
+[ext_resource type="Texture2D" uid="uid://im6jxu872d04" path="res://textures/ui/main_menu.png" id="7_pisro"]
+[ext_resource type="Script" uid="uid://du5ypbydfb80t" path="res://misc/building_type.gd" id="7_u14jd"]
+[ext_resource type="PackedScene" uid="uid://bffgqmliomxq6" path="res://global/time_thing.tscn" id="8_0l0ow"]
+[ext_resource type="Script" uid="uid://brwoxuu8bbht" path="res://misc/modifier/modifier.gd" id="8_v3gnm"]
+[ext_resource type="Script" uid="uid://b2xvvcmgvhe48" path="res://misc/modifier/int_modifier.gd" id="9_nopno"]
+[ext_resource type="Script" uid="uid://dx0flnn3eehkj" path="res://misc/limit/Limit.gd" id="10_oto3s"]
+[ext_resource type="Script" uid="uid://msq8w0ykpwph" path="res://misc/modifier/float_modifier.gd" id="10_ugssu"]
+[ext_resource type="Script" uid="uid://ckf3p8cormv6d" path="res://misc/limit/FlatLimit.gd" id="11_8noso"]
+[ext_resource type="Script" uid="uid://cefglg3ix360g" path="res://misc/resourcetype.gd" id="12_h01n4"]
+[ext_resource type="PackedScene" uid="uid://ci6gyuemjy6ej" path="res://cam.tscn" id="13_owc86"]
+[ext_resource type="Script" uid="uid://4pa3y203wyq2" path="res://misc/limit/AreaLimit.gd" id="13_vlbmg"]
+[ext_resource type="PackedScene" uid="uid://4svigsfnmmnu" path="res://ui/building_display.tscn" id="14_13fqp"]
+[ext_resource type="Script" uid="uid://c617rjebh58fy" path="res://misc/limit/POPLimit.gd" id="15_o1xc4"]
+[ext_resource type="PackedScene" uid="uid://fnr2t4vp8jm5" path="res://ui/tech_tree.tscn" id="16_u02yw"]
+[ext_resource type="Theme" uid="uid://2yyynasshus1" path="res://themes/default.tres" id="17_miy2q"]
+[ext_resource type="Theme" uid="uid://ba3dvr4p5y0nn" path="res://themes/pink.tres" id="18_nhdwa"]
+[ext_resource type="Script" uid="uid://bsqomyqq8o3i1" path="res://misc/localizer.gd" id="24_simij"]
+[ext_resource type="Script" uid="uid://cl2yut0pnkpl" path="res://misc/localizer_target.gd" id="25_xgmct"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xqlvv"]
+render_priority = 0
+shader = ExtResource("2_84sqh")
+
+[sub_resource type="Gradient" id="Gradient_0f8l1"]
+colors = PackedColorArray(0, 0.384314, 0, 1, 0, 1, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_sgetp"]
+colors = PackedColorArray(0, 0, 0.686275, 1, 0, 0.368627, 0.933333, 1)
+
+[sub_resource type="Gradient" id="Gradient_pisro"]
+offsets = PackedFloat32Array(0, 0.497268, 1)
+colors = PackedColorArray(1, 1, 0.380392, 1, 0.489622, 0.489622, 0.489622, 1, 0.31, 0.208733, 0.093, 1)
+
+[sub_resource type="Resource" id="Resource_miy2q"]
+script = ExtResource("7_7vvuh")
+building_type = &"farm"
+metadata/_custom_type_script = "uid://c6ngg4iut2v73"
+
+[sub_resource type="Resource" id="Resource_0l0ow"]
+script = ExtResource("3_yschh")
+tech_tree_pos = Vector2(-1, 0)
+id = &"agriculture"
+cost = 1000.0
+requirements = Array[ExtResource("4_rlu6y")]([])
+on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_miy2q")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+metadata/_custom_type_script = "uid://b4g0i85l02pw8"
+
+[sub_resource type="Resource" id="Resource_simij"]
+script = ExtResource("7_7vvuh")
+building_type = &"builder"
+metadata/_custom_type_script = "uid://c6ngg4iut2v73"
+
+[sub_resource type="Resource" id="Resource_xgmct"]
+script = ExtResource("5_rlu6y")
+tech = &"agriculture"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_u02yw"]
+script = ExtResource("5_rlu6y")
+tech = &"writing"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_owc86"]
+script = ExtResource("3_yschh")
+tech_tree_pos = Vector2(0, 1)
+id = &"brick"
+cost = 2500.0
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_xgmct"), SubResource("Resource_u02yw")])
+on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_simij")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+metadata/_custom_type_script = "uid://b4g0i85l02pw8"
+
+[sub_resource type="Resource" id="Resource_kvenq"]
+script = ExtResource("5_rlu6y")
+tech = &"writing"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_6sa6c"]
+script = ExtResource("3_yschh")
+tech_tree_pos = Vector2(1, 1)
+id = &"oreligion"
+cost = 2000.0
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_kvenq")])
+on_discovery = Array[ExtResource("4_dk7jd")]([])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+metadata/_custom_type_script = "uid://b4g0i85l02pw8"
+
+[sub_resource type="Resource" id="Resource_nhdwa"]
+script = ExtResource("7_7vvuh")
+building_type = &"research"
+metadata/_custom_type_script = "uid://c6ngg4iut2v73"
+
+[sub_resource type="Resource" id="Resource_u14jd"]
+script = ExtResource("3_yschh")
+tech_tree_pos = Vector2(1, 0)
+id = &"writing"
+cost = 1500.0
+requirements = Array[ExtResource("4_rlu6y")]([])
+on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_nhdwa")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+metadata/_custom_type_script = "uid://b4g0i85l02pw8"
+
+[sub_resource type="Resource" id="Resource_dobe7"]
+script = ExtResource("11_8noso")
+l = 10
+metadata/_custom_type_script = "uid://ckf3p8cormv6d"
+
+[sub_resource type="Resource" id="Resource_h1c8t"]
+script = ExtResource("10_ugssu")
+mod = 0.1
+target = &"BuildAdd"
+metadata/_custom_type_script = "uid://msq8w0ykpwph"
+
+[sub_resource type="Resource" id="Resource_o1xc4"]
+script = ExtResource("5_rlu6y")
+tech = &"brick"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_h01n4"]
+script = ExtResource("7_u14jd")
+cost = 100.0
+land_use = 0.1
+id = &"builder"
+limits = Array[ExtResource("10_oto3s")]([SubResource("Resource_dobe7")])
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_o1xc4")])
+modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_h1c8t")])
+metadata/_custom_type_script = "uid://du5ypbydfb80t"
+
+[sub_resource type="Resource" id="Resource_sfw8g"]
+script = ExtResource("13_vlbmg")
+area = 1
+proportion = 0.01
+metadata/_custom_type_script = "uid://4pa3y203wyq2"
+
+[sub_resource type="Resource" id="Resource_ugssu"]
+script = ExtResource("9_nopno")
+mod = 50
+target = &"AddPopCap"
+metadata/_custom_type_script = "uid://b2xvvcmgvhe48"
+
+[sub_resource type="Resource" id="Resource_8noso"]
+script = ExtResource("5_rlu6y")
+tech = &"agriculture"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_v3gnm"]
+script = ExtResource("7_u14jd")
+cost = 100.0
+land_use = 1.0
+id = &"farm"
+limits = Array[ExtResource("10_oto3s")]([SubResource("Resource_sfw8g")])
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_8noso")])
+modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_ugssu")])
+metadata/_custom_type_script = "uid://du5ypbydfb80t"
+
+[sub_resource type="Resource" id="Resource_eft0r"]
+script = ExtResource("15_o1xc4")
+p = 5000
+metadata/_custom_type_script = "uid://c617rjebh58fy"
+
+[sub_resource type="Resource" id="Resource_13fqp"]
+script = ExtResource("10_ugssu")
+mod = 0.1
+target = &"AddTech"
+metadata/_custom_type_script = "uid://msq8w0ykpwph"
+
+[sub_resource type="Resource" id="Resource_vlbmg"]
+script = ExtResource("5_rlu6y")
+tech = &"writing"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_7vvuh"]
+script = ExtResource("7_u14jd")
+cost = 100.0
+land_use = 0.1
+id = &"research"
+limits = Array[ExtResource("10_oto3s")]([SubResource("Resource_eft0r")])
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_vlbmg")])
+modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_13fqp")])
+metadata/_custom_type_script = "uid://du5ypbydfb80t"
+
+[sub_resource type="Resource" id="Resource_ijdv0"]
+script = ExtResource("12_h01n4")
+id = &"coal"
+map_color = Color(1, 0, 0, 1)
+metadata/_custom_type_script = "uid://cefglg3ix360g"
+
+[sub_resource type="Resource" id="Resource_uea2g"]
+script = ExtResource("12_h01n4")
+id = &""
+map_color = Color(1, 1, 0, 1)
+metadata/_custom_type_script = "uid://cefglg3ix360g"
+
+[sub_resource type="Resource" id="Resource_oto3s"]
+script = ExtResource("12_h01n4")
+id = &"iron"
+map_color = Color(1, 1, 1, 1)
+metadata/_custom_type_script = "uid://cefglg3ix360g"
+
+[sub_resource type="Resource" id="Resource_hm5nq"]
+script = ExtResource("12_h01n4")
+id = &"oil"
+map_color = Color(0, 0, 0, 1)
+metadata/_custom_type_script = "uid://cefglg3ix360g"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_aewma"]
+fractal_gain = 0.635
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pisro"]
+
+[sub_resource type="Environment" id="Environment_5eloo"]
+background_mode = 1
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.05
+
+[sub_resource type="Resource" id="Resource_hjsae"]
+script = ExtResource("25_xgmct")
+node = NodePath("../HBoxContainer/LightButton")
+var_id = &"tooltip_text"
+loc_id = "global.button.light"
+metadata/_custom_type_script = "uid://cl2yut0pnkpl"
+
+[sub_resource type="Resource" id="Resource_6sfye"]
+script = ExtResource("25_xgmct")
+node = NodePath("../HBoxContainer/RotateWithPlanetButton")
+var_id = &"tooltip_text"
+loc_id = "global.button.planet_rotate"
+metadata/_custom_type_script = "uid://cl2yut0pnkpl"
+
+[sub_resource type="Resource" id="Resource_x5hde"]
+script = ExtResource("25_xgmct")
+node = NodePath("../HBoxContainer/AtmosphereButton")
+var_id = &"tooltip_text"
+loc_id = "global.button.atmosphere"
+metadata/_custom_type_script = "uid://cl2yut0pnkpl"
+
+[sub_resource type="Resource" id="Resource_aipfm"]
+script = ExtResource("25_xgmct")
+node = NodePath("../HBoxContainer/MainMenuButton")
+var_id = &"tooltip_text"
+loc_id = "global.button.main_menu"
+metadata/_custom_type_script = "uid://cl2yut0pnkpl"
+
+[node name="Global" type="Node"]
+script = ExtResource("1_jlmgm")
+base_planet_mat = SubResource("ShaderMaterial_xqlvv")
+color_ramps = Dictionary[StringName, Gradient]({
+&"green": SubResource("Gradient_0f8l1"),
+&"ocean": SubResource("Gradient_sgetp"),
+&"surfaceh": SubResource("Gradient_pisro")
+})
+techs = Dictionary[StringName, ExtResource("3_yschh")]({
+&"agriculture": SubResource("Resource_0l0ow"),
+&"brick": SubResource("Resource_owc86"),
+&"oreligion": SubResource("Resource_6sa6c"),
+&"writing": SubResource("Resource_u14jd")
+})
+building_types = Dictionary[StringName, ExtResource("7_u14jd")]({
+&"builder": SubResource("Resource_h01n4"),
+&"farm": SubResource("Resource_v3gnm"),
+&"research": SubResource("Resource_7vvuh")
+})
+resource_types = Dictionary[StringName, ExtResource("12_h01n4")]({
+&"coal": SubResource("Resource_ijdv0"),
+&"gold": SubResource("Resource_uea2g"),
+&"iron": SubResource("Resource_oto3s"),
+&"oil": SubResource("Resource_hm5nq")
+})
+base_noise = Dictionary[StringName, FastNoiseLite]({
+&"base": SubResource("FastNoiseLite_aewma"),
+&"type2": SubResource("FastNoiseLite_pisro")
+})
+themes = Dictionary[StringName, Theme]({
+&"default": ExtResource("17_miy2q"),
+&"pink": ExtResource("18_nhdwa")
+})
+
+[node name="Cam" parent="." instance=ExtResource("13_owc86")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.16118, 0, 10.2573)
+far = 400000.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5eloo")
+
+[node name="TileInfoDisplay" parent="." instance=ExtResource("3_vt5yb")]
+visible = false
+
+[node name="PolitiesDisplay" parent="." instance=ExtResource("5_sgetp")]
+visible = false
+
+[node name="BuildingDisplay" parent="." instance=ExtResource("14_13fqp")]
+visible = false
+
+[node name="TechTree" parent="." instance=ExtResource("16_u02yw")]
+visible = false
+
+[node name="TimeThing" parent="." instance=ExtResource("8_0l0ow")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -14.0
+offset_bottom = 31.0
+grow_horizontal = 0
+alignment = 2
+
+[node name="ScienceDetail" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="LightButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+icon = ExtResource("4_l7tt2")
+
+[node name="RotateWithPlanetButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+icon = ExtResource("5_803q2")
+
+[node name="AtmosphereButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+toggle_mode = true
+button_pressed = true
+icon = ExtResource("6_5yjsk")
+
+[node name="MainMenuButton" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("7_pisro")
+
+[node name="Label" type="Label" parent="."]
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+
+[node name="SystemCreationMenu" parent="." instance=ExtResource("4_aewma")]
+visible = false
+
+[node name="SolarSystem" type="Node3D" parent="."]
+
+[node name="Light" type="OmniLight3D" parent="."]
+shadow_enabled = true
+omni_range = 100000.0
+omni_attenuation = 0.0
+
+[node name="MapSelect" parent="." instance=ExtResource("6_ery7i")]
+visible = false
+
+[node name="MainMenu" parent="." instance=ExtResource("5_4acp8")]
+offset_left = -39.5
+offset_top = -33.0
+offset_right = 39.5
+offset_bottom = 33.0
+
+[node name="Localizer" type="Node" parent="."]
+script = ExtResource("24_simij")
+to_localize = Array[ExtResource("25_xgmct")]([SubResource("Resource_hjsae"), SubResource("Resource_6sfye"), SubResource("Resource_x5hde"), SubResource("Resource_aipfm")])
+metadata/_custom_type_script = "uid://bsqomyqq8o3i1"
+
+[connection signal="item_selected" from="HBoxContainer/ScienceDetail" to="." method="_on_science_detail_item_selected"]
+[connection signal="toggled" from="HBoxContainer/LightButton" to="." method="_on_light_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/RotateWithPlanetButton" to="." method="_on_rotate_with_planet_button_toggled"]
+[connection signal="toggled" from="HBoxContainer/AtmosphereButton" to="." method="_on_atmosphere_button_toggled"]
+[connection signal="pressed" from="HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

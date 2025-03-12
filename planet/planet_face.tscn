@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5t6y2yfm0wke"]
+
+[ext_resource type="Script" uid="uid://cakul14va7e0" path="res://planet/planet_face.gd" id="1_fry53"]
+
+[node name="PlanetFace" type="MeshInstance3D"]
+script = ExtResource("1_fry53")
+normal = Vector3(0, 1, 0)

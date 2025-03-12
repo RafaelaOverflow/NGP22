@@ -1,0 +1,38 @@
+{
+	"language_id" : "english",
+	"language" : "English",
+	"localization" : {
+		"common" : {
+			"size" : "Size %s",
+			"land_use" : "Land Use %.2f"
+		},
+		"global" : {
+			"button" : {
+				"light" : "Toggle Light",
+				"planet_rotate" : "Toggle Follow Planet Rotation",
+				"atmosphere" : "Toggle Atmosphere",
+				"main_menu" : "Main Menu"
+			}
+		},
+		"main_menu" : {
+			"button" : {
+				"continue" : "Continue",
+				"new_game" : "New Game",
+				"quit" : "Quit",
+				"save" : "Save Game",
+				"load" : "Load Game"
+			}
+		},
+		"tech" : {
+			"agriculture" : "Agriculture",
+			"brick" : "Rudimentary Buildings",
+			"oreligion" : "Organized Religion",
+			"writing" : "Writing"
+		},
+		"building" : {
+			"farm" : "Farm",
+			"research" : "Library",
+			
+		}
+	}
+}

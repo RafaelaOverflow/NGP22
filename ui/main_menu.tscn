@@ -1,0 +1,96 @@
+[gd_scene load_steps=9 format=3 uid="uid://cnror1i6nfsjt"]
+
+[ext_resource type="Script" uid="uid://2mic50ct2t4q" path="res://ui/main_menu.gd" id="1_t7e0r"]
+[ext_resource type="Script" uid="uid://bsqomyqq8o3i1" path="res://misc/localizer.gd" id="2_wk0pr"]
+[ext_resource type="Script" uid="uid://cl2yut0pnkpl" path="res://misc/localizer_target.gd" id="3_rmr83"]
+
+[sub_resource type="Resource" id="Resource_8uxxo"]
+script = ExtResource("3_rmr83")
+node = NodePath("../VBoxContainer/ContinueButton")
+var_id = &"text"
+loc_id = "main_menu.button.continue"
+metadata/_custom_type_script = "uid://cl2yut0pnkpl"
+
+[sub_resource type="Resource" id="Resource_ei257"]
+script = ExtResource("3_rmr83")
+node = NodePath("../VBoxContainer/NewGame")
+var_id = &"text"
+loc_id = "main_menu.button.new_game"
+metadata/_custom_type_script = "uid://cl2yut0pnkpl"
+
+[sub_resource type="Resource" id="Resource_p8ri8"]
+script = ExtResource("3_rmr83")
+node = NodePath("../VBoxContainer/QuitButton")
+var_id = &"text"
+loc_id = "main_menu.button.quit"
+metadata/_custom_type_script = "uid://cl2yut0pnkpl"
+
+[sub_resource type="Resource" id="Resource_wk0pr"]
+script = ExtResource("3_rmr83")
+node = NodePath("../VBoxContainer/SaveButton")
+var_id = &"text"
+loc_id = "main_menu.button.save"
+metadata/_custom_type_script = "uid://cl2yut0pnkpl"
+
+[sub_resource type="Resource" id="Resource_rmr83"]
+script = ExtResource("3_rmr83")
+node = NodePath("../VBoxContainer/LoadButton")
+var_id = &"text"
+loc_id = "main_menu.button.load"
+metadata/_custom_type_script = "uid://cl2yut0pnkpl"
+
+[node name="PanelContainer" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelContainer2"
+script = ExtResource("1_t7e0r")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="ContinueButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+
+[node name="SaveButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Save Game"
+
+[node name="LoadButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="NewGame" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "New Game"
+
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="Localizer" type="Node" parent="."]
+script = ExtResource("2_wk0pr")
+to_localize = Array[ExtResource("3_rmr83")]([SubResource("Resource_8uxxo"), SubResource("Resource_ei257"), SubResource("Resource_p8ri8"), SubResource("Resource_wk0pr"), SubResource("Resource_rmr83")])
+metadata/_custom_type_script = "uid://bsqomyqq8o3i1"
+
+[node name="SaveFileDialog" type="FileDialog" parent="."]
+always_on_top = true
+access = 1
+
+[node name="LoadFileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+access = 1
+
+[connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="file_selected" from="SaveFileDialog" to="." method="_on_save_file_dialog_file_selected"]
+[connection signal="file_selected" from="LoadFileDialog" to="." method="_on_load_file_dialog_file_selected"]

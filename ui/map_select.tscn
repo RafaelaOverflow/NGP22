@@ -1,0 +1,124 @@
+[gd_scene load_steps=12 format=3 uid="uid://hns21l22glpt"]
+
+[ext_resource type="Texture2D" uid="uid://bmtcigu2ulb8x" path="res://textures/ui/normal.png" id="1_5cki3"]
+[ext_resource type="Script" uid="uid://3d57o4cgvfbd" path="res://ui/map_select.gd" id="1_kiem7"]
+[ext_resource type="Texture2D" uid="uid://jvjayqipwakh" path="res://textures/ui/altitude.png" id="3_2dqa6"]
+[ext_resource type="Texture2D" uid="uid://dofh41xujfova" path="res://textures/ui/temperature.png" id="4_4c1rp"]
+[ext_resource type="Texture2D" uid="uid://btqupb2nvf000" path="res://textures/ui/pop.png" id="5_w6xd0"]
+[ext_resource type="Texture2D" uid="uid://dwwoobexngd2f" path="res://textures/ui/id.png" id="6_sc17t"]
+[ext_resource type="Texture2D" uid="uid://dclf7fuv0eotw" path="res://textures/ui/tree.png" id="7_4bmvw"]
+[ext_resource type="Texture2D" uid="uid://q2v66dges4h0" path="res://textures/ui/humid.png" id="8_vbh1m"]
+[ext_resource type="Texture2D" uid="uid://rpiiihw2rstr" path="res://textures/ui/political.png" id="9_brb6d"]
+[ext_resource type="Texture2D" uid="uid://dyjxnv6hh2m4j" path="res://textures/ui/atom.png" id="10_mvlay"]
+[ext_resource type="Texture2D" uid="uid://cj7fggoinhx5p" path="res://textures/ui/land_use.png" id="11_i3qdl"]
+
+[node name="MapSelect" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kiem7")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.25
+anchor_right = 0.75
+anchor_bottom = 0.75
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelContainer2"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PanelContainer"]
+layout_mode = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="PanelContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="NormalButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("1_5cki3")
+expand_icon = true
+
+[node name="AltitudeButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("3_2dqa6")
+expand_icon = true
+
+[node name="TemperatureButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("4_4c1rp")
+expand_icon = true
+
+[node name="PopButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("5_w6xd0")
+expand_icon = true
+
+[node name="IDButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("6_sc17t")
+expand_icon = true
+
+[node name="ForestButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("7_4bmvw")
+expand_icon = true
+
+[node name="HumidButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("8_vbh1m")
+expand_icon = true
+
+[node name="PolityButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("9_brb6d")
+expand_icon = true
+
+[node name="TechButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("10_mvlay")
+expand_icon = true
+
+[node name="TechOptionButton" type="OptionButton" parent="PanelContainer/ScrollContainer/HFlowContainer/TechButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="LandUseButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("11_i3qdl")
+expand_icon = true
+
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/NormalButton" to="." method="_on_normal_button_pressed"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/AltitudeButton" to="." method="_on_altitude_button_pressed"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/TemperatureButton" to="." method="_on_temperature_button_pressed"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/PopButton" to="." method="_on_pop_button_pressed"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/IDButton" to="." method="_on_id_button_pressed"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/ForestButton" to="." method="_on_forest_button_pressed"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/HumidButton" to="." method="_on_humid_button_pressed"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/PolityButton" to="." method="_on_polity_button_pressed"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/TechButton" to="." method="_on_tech_button_pressed"]
+[connection signal="item_selected" from="PanelContainer/ScrollContainer/HFlowContainer/TechButton/TechOptionButton" to="." method="_on_tech_option_button_item_selected"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/LandUseButton" to="." method="_on_land_use_button_pressed"]

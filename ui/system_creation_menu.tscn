@@ -1,0 +1,138 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwopsrknkwbd1"]
+
+[ext_resource type="Script" uid="uid://brb06l5x7ms7j" path="res://ui/system_creation_menu.gd" id="1_3374t"]
+[ext_resource type="PackedScene" uid="uid://bf436t4qtupcy" path="res://planet/Planet.tscn" id="2_x6pf3"]
+
+[node name="SystemCreationMenu" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3374t")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="Seed" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/Seed"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Seed:"
+
+[node name="LineEdit" type="LineEdit" parent="ScrollContainer/VBoxContainer/Seed"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Spacer" type="Control" parent="ScrollContainer/VBoxContainer/Seed"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="PlanetResolution" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/PlanetResolution"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Planet Tile Resolution:"
+
+[node name="SpinBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/PlanetResolution"]
+layout_mode = 2
+min_value = 2.0
+value = 8.0
+
+[node name="Label2" type="Label" parent="ScrollContainer/VBoxContainer/PlanetResolution"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="PlanetResolution2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/PlanetResolution2"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Planet Mesh Resolution:"
+
+[node name="SpinBox" type="SpinBox" parent="ScrollContainer/VBoxContainer/PlanetResolution2"]
+layout_mode = 2
+min_value = 2.0
+value = 8.0
+
+[node name="Label2" type="Label" parent="ScrollContainer/VBoxContainer/PlanetResolution2"]
+layout_mode = 2
+size_flags_horizontal = 2
+
+[node name="Button" type="Button" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "create"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="SubViewport" type="SubViewport" parent="ScrollContainer/VBoxContainer/HBoxContainer/SubViewportContainer"]
+own_world_3d = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="ScrollContainer/VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport"]
+
+[node name="Planet" parent="ScrollContainer/VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("2_x6pf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.17628)
+show_planet = true
+
+[node name="Light" type="OmniLight3D" parent="ScrollContainer/VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.01764, 0, 0)
+omni_range = 100000.0
+omni_attenuation = 0.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Display Planet Settings (doesn't affect the system generation)"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Atmosphere"
+
+[node name="ShowAtmosphereSlider" type="HSlider" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Forestation"
+
+[node name="CheckBox" type="CheckBox" parent="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[connection signal="text_changed" from="ScrollContainer/VBoxContainer/Seed/LineEdit" to="." method="_on_seed_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/PlanetResolution/SpinBox" to="." method="planet_resolution_value_changed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/PlanetResolution2/SpinBox" to="." method="_planet_mesh_resolution_value_changed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/Button" to="." method="_create_pressed"]
+[connection signal="value_changed" from="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer/ShowAtmosphereSlider" to="." method="_on_show_atmosphere_slider_value_changed"]
+[connection signal="toggled" from="ScrollContainer/VBoxContainer/HBoxContainer/VBoxContainer/HBoxContainer2/CheckBox" to="." method="_show_planet_forest_toggled"]

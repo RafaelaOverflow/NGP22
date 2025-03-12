@@ -1,0 +1,22 @@
+extends Control
+@onready var texture_progress_bar: TextureProgressBar = $TextureProgressBar
+
+var speed = 0
+var last = 0
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("pause"):
+		if speed != 0:
+			last = speed
+			set_speed(0)
+		else:
+			set_speed(last)
+	for i in 9:
+		i+=1
+		if Input.is_action_just_pressed("%s"%i):
+			set_speed(i)
+
+func set_speed(_speed):
+	speed = _speed
+	Global.time_scale = [0,0.01,0.1,1.0,10.0,50.0,100.0,1000.0,10000.0,100000.0][speed]
+	if speed > 2 and (!Global.rotate_with_planet or speed > 4): Global._on_light_button_toggled(false)
+	texture_progress_bar.value = speed

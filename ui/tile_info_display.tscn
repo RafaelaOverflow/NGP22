@@ -1,0 +1,105 @@
+[gd_scene load_steps=7 format=3 uid="uid://d4er7s3jhwuaf"]
+
+[ext_resource type="Script" uid="uid://b1pbhnna81cv0" path="res://ui/tile_info_display.gd" id="1_cnman"]
+[ext_resource type="Texture2D" uid="uid://dclf7fuv0eotw" path="res://textures/ui/tree.png" id="2_2topd"]
+[ext_resource type="Texture2D" uid="uid://rpiiihw2rstr" path="res://textures/ui/political.png" id="2_rlgpk"]
+[ext_resource type="Texture2D" uid="uid://btqupb2nvf000" path="res://textures/ui/pop.png" id="3_0dy3y"]
+[ext_resource type="Texture2D" uid="uid://dpwqsc3asb3e4" path="res://textures/ui/building.png" id="3_6avxv"]
+[ext_resource type="Texture2D" uid="uid://dyjxnv6hh2m4j" path="res://textures/ui/atom.png" id="4_tvba6"]
+
+[node name="TileInfoDisplay" type="PanelContainer"]
+anchors_preset = -1
+anchor_right = 0.25
+anchor_bottom = 1.0
+grow_vertical = 2
+script = ExtResource("1_cnman")
+
+[node name="TabContainer" type="TabContainer" parent="."]
+layout_mode = 2
+current_tab = 2
+
+[node name="System" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Label" type="Label" parent="TabContainer/System"]
+layout_mode = 2
+
+[node name="HFlowContainer" type="HFlowContainer" parent="TabContainer/System"]
+layout_mode = 2
+
+[node name="PolitiesButton" type="Button" parent="TabContainer/System/HFlowContainer"]
+layout_mode = 2
+icon = ExtResource("2_rlgpk")
+
+[node name="Planet" type="VBoxContainer" parent="TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Label" type="Label" parent="TabContainer/Planet"]
+layout_mode = 2
+
+[node name="Tile" type="ScrollContainer" parent="TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Tile"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColorRect" type="ColorRect" parent="TabContainer/Tile/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Tile/VBoxContainer"]
+layout_mode = 2
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Tile/VBoxContainer"]
+layout_mode = 2
+
+[node name="BuildingButton" type="Button" parent="TabContainer/Tile/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_6avxv")
+
+[node name="TechButton" type="Button" parent="TabContainer/Tile/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("4_tvba6")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Tile/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Tile/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Add:"
+
+[node name="ForestButton" type="Button" parent="TabContainer/Tile/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+icon = ExtResource("2_2topd")
+
+[node name="PopButton" type="Button" parent="TabContainer/Tile/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+icon = ExtResource("3_0dy3y")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Button" type="Button" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(31, 0)
+layout_mode = 2
+text = "X"
+
+[connection signal="pressed" from="TabContainer/System/HFlowContainer/PolitiesButton" to="." method="_on_polities_button_pressed"]
+[connection signal="pressed" from="TabContainer/Tile/VBoxContainer/HBoxContainer/BuildingButton" to="." method="_on_building_button_pressed"]
+[connection signal="pressed" from="TabContainer/Tile/VBoxContainer/HBoxContainer/TechButton" to="." method="_on_tech_button_pressed"]
+[connection signal="pressed" from="TabContainer/Tile/VBoxContainer/HBoxContainer2/ForestButton" to="." method="_on_forest_button_pressed"]
+[connection signal="pressed" from="TabContainer/Tile/VBoxContainer/HBoxContainer2/PopButton" to="." method="_on_pop_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="hide"]

@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8cmmeefhirdq"]
+
+[ext_resource type="Script" uid="uid://bbhcgcyx1xg0p" path="res://celestial_body.gd" id="1_1bp6u"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_1bp6u"]
+radius = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bp6u"]
+albedo_color = Color(1, 0.823529, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 0.807843, 1)
+emission_energy_multiplier = 1.7
+
+[sub_resource type="SphereMesh" id="SphereMesh_1bp6u"]
+material = SubResource("StandardMaterial3D_1bp6u")
+radius = 1.0
+height = 2.0
+
+[node name="Star" type="CharacterBody3D"]
+script = ExtResource("1_1bp6u")
+mass = 100
+metadata/_custom_type_script = "uid://bbhcgcyx1xg0p"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_1bp6u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_1bp6u")
+
+[node name="CameraHolder" type="Node3D" parent="."]
+
+[node name="Node3D" type="Node3D" parent="CameraHolder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.98376)
