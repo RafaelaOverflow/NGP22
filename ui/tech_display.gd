@@ -10,11 +10,11 @@ func create(tech : Tech, tile : PlanetTile):
 	tech_id = tech.id
 	tile_ref = weakref(tile)
 	label.text = Global.localize("tech.%s" % tech.id)
-	position = tech.tech_tree_pos*200.0
+	position = tech.tech_tree_pos*300.0
 	for r : Requirement in tech.requirements:
 		if r.type == Requirement.TECH:
 			var t = Global.techs[r.tech]
-			var pos = t.tech_tree_pos * 200
+			var pos = t.tech_tree_pos * 300
 			var pl = pos-position
 			var l2d = Line2D.new()
 			l2d.add_point(Vector2.ZERO)

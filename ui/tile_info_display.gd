@@ -23,6 +23,7 @@ func _process(delta: float) -> void:
 			2:
 				color_rect.color = tile.get_color(planet.data)
 				color_rect.custom_minimum_size = Vector2(1,1) * tile_vbox.size.x
+				color_rect.size = Vector2(1,1) * tile_vbox.size.x
 				tile_label.text = "ID %s\nAltitude %.2f m\nHumidity %s\nTemperature %.2f °C\nForestation %.2f%s\nArea %.2f km²\nLand Used %.2f km2\nIs Ocean %s\nPopulation %s\nPopulation Capacity %s" % [tile.id,tile.get_altitude(planet.data),("%.2f" % tile.get_humidity(planet.data))+"%",tile.get_temperature(planet),tile.get_forestation(planet.data),"%",planet.data.area_per_tile,tile.get_modifier(PlanetTile.LAND_USE),tile.is_ocean(planet.data),tile.get_total_pop(),tile.get_pop_capacity(planet.data)]
 			1:
 				planet_label.text = "Radius %.2f km\nSurface Area %.2f km²\nOcean Level %.2f\nOrbit %.2f (%.2fAU)\nYear Length %s\nYear %s\nDay %s\nPopulation %s" % [planet.data.radius,planet.data.area,planet.data.ocean_level,planet.cd,planet.cd/Global.AU,planet.pt.yd,planet.pt.get_year(),planet.pt.get_day(),planet.data.pop]
@@ -52,3 +53,7 @@ func _on_building_button_pressed() -> void:
 
 func _on_tech_button_pressed() -> void:
 	Global.tech_tree.display(tile_ref.get_ref())
+
+
+func _on_pop_display_button_pressed() -> void:
+	Global.pop_display.display(tile_ref.get_ref().pops)

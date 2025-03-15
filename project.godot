@@ -21,7 +21,7 @@ Global="*res://global/global.tscn"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/icosphere/plugin.cfg")
+enabled=PackedStringArray("res://addons/easy_charts/plugin.cfg", "res://addons/icosphere/plugin.cfg")
 
 [gui]
 

@@ -7,7 +7,7 @@
 bg_color = Color(0.223103, 0.223103, 0.223103, 1)
 
 [node name="TechDisplay" type="PanelContainer"]
-custom_minimum_size = Vector2(150, 100)
+custom_minimum_size = Vector2(250, 100)
 offset_right = 40.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_toix4")
@@ -20,6 +20,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 2
 text = "tech"
+autowrap_mode = 3
 
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2

@@ -8,6 +8,9 @@ class_name BuildingType
 @export var limits : Array[Limit] = []
 @export var requirements : Array[Requirement] = []
 @export var modifiers : Array[Modifier] = []
+@export var hire : Dictionary[POP.JOB,int] = {}
+@export var consume : Dictionary[StringName,float] = {}
+@export var produce : Dictionary[StringName,float] = {}
 
 func get_limit(tile:PlanetTile):
 	#if !is_available(tile): return 0
@@ -26,7 +29,7 @@ func get_limit(tile:PlanetTile):
 			Limit.POP_:
 				l = min(l,(tile.get_total_pop()/limit.p)-tile.get_building_size(id))
 	
-	return l
+	return max(l,0)
 
 func is_available(tile:PlanetTile):
 	for r in requirements:

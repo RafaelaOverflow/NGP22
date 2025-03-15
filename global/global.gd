@@ -23,6 +23,7 @@ var polities : Dictionary[int,Polity] = {}
 @export var techs : Dictionary[StringName,Tech] = {}
 @export var building_types : Dictionary[StringName,BuildingType] = {}
 @export var resource_types : Dictionary[StringName,ResourceType] = {}
+@export var goods : Dictionary[StringName,Good] = {}
 
 
 @export var base_noise : Dictionary[StringName,FastNoiseLite] = {}
@@ -30,8 +31,11 @@ var polities : Dictionary[int,Polity] = {}
 @onready var polities_display: Control = $PolitiesDisplay
 @onready var building_display: Control = $BuildingDisplay
 @onready var tech_tree: Control = $TechTree
+@onready var pop_display: Control = $PopDisplay
 
 @onready var science_detail: OptionButton = $HBoxContainer/ScienceDetail
+@onready var good_detail: OptionButton = $HBoxContainer/GoodDetail
+@onready var good_detail_2: OptionButton = $HBoxContainer/GoodDetail2
 
 var localization := LocalizationData.new()
 func localize(id,args = {}):
@@ -77,8 +81,10 @@ var settings = {
 
 func _ready() -> void:
 	tree = get_tree()
-	for tech in Global.techs.keys():
+	for tech in techs.keys():
 		science_detail.add_item(tech)
+	for good in goods.keys():
+		good_detail_2.add_item(good)
 	load_settings()
 	load_localization()
 
@@ -87,6 +93,14 @@ func update_localization():
 	for key in techs.keys():
 		science_detail.set_item_text(i,localize("tech.%s" % key))
 		i+=1
+	i = 0
+	for key in goods.keys():
+		good_detail_2.set_item_text(i,localize("good.%s" % key))
+		i+=1
+	good_detail.set_item_text(0,localize("map_mode.10_d0"))
+	good_detail.set_item_text(1,localize("map_mode.10_d1"))
+	good_detail.set_item_text(2,localize("map_mode.10_d2"))
+	
 	emit_signal("localization_update")
 
 func save_settings():
@@ -129,6 +143,8 @@ func modify_noise_range(n,min = 0,max = 1):
 var lts = 0
 func _process(delta: float) -> void:
 	science_detail.visible = map_mode == 8
+	good_detail.visible = map_mode == 10
+	good_detail_2.visible = map_mode == 10
 	for ta in task_threads:
 		if ta.finished:
 			ta.actual_thread.wait_to_finish()
@@ -248,3 +264,13 @@ func _on_main_menu_button_pressed() -> void:
 
 func _on_science_detail_item_selected(index: int) -> void:
 	map_detail = Global.techs.keys()[index]
+
+
+func _on_good_detail_item_selected(index: int) -> void:
+	if !map_detail is Array: map_detail = [index,goods.keys()[0]]
+	else: map_detail[0] = index
+
+
+func _on_good_detail_2_item_selected(index: int) -> void:
+	if !map_detail is Array: map_detail = [0,goods.keys()[index]]
+	else: map_detail[1] = goods.keys()[index]

@@ -68,19 +68,44 @@ var build_points = 0.0
 var modifiers := {}
 func get_modifier(mid,default = 0):
 	return modifiers.get(mid,default)
-func modify(key,value):
-	if !modifiers.has(key): modifiers[key] = value
-	else: modifiers[key] += value
 func update_modifiers():
-	modifiers = {}
+	var nmodifiers = {}
 	for b : Building in buildings.values():
-		b.modify(self)
+		b.modify(self,nmodifiers)
 	for t : StringName in techs.keys():
 		if has_tech(t):
 			var tech = Global.techs[t]
-			tech.modify(self)
+			tech.modify(self,nmodifiers)
+	modifiers = nmodifiers
+var consume : Dictionary[StringName,float] = {}
+var produce : Dictionary[StringName,float] = {}
+func update_goods(data : PlanetData = get_data()):
+	var nconsume : Dictionary[StringName,float] = {}
+	var nproduce : Dictionary[StringName,float] = {}
+	for b : Building in buildings.values():
+		b.goods(self,nconsume,nproduce)
+	consume = nconsume
+	produce = nproduce
+	for key in consume.keys():
+		if consume[key] > data.nmax_consume[key]: data.nmax_consume[key] = consume[key]
+	for key in produce.keys():
+		if produce[key] > data.nmax_produce[key]: data.nmax_produce[key] = produce[key]
+	update_good_prices()
 func get_available_land(data:PlanetData = get_data()) -> float:
 	return data.area_per_tile - get_modifier(LAND_USE)
+var good_prices : Dictionary[StringName,float] = {}
+func update_good_prices():
+	var ngood_prices : Dictionary[StringName,float] = {}
+	for key : StringName in Global.goods.keys():
+		var g = Global.goods[key]
+		var c = consume.get(key,0)
+		if c == 0:
+			ngood_prices[key] = g.base_price*0.2
+			continue
+		var p = produce.get(key,0)
+		ngood_prices[key] = g.base_price*(2.0-clamp(p/c,0.2,1.8))
+	good_prices = ngood_prices
+
 
 func _init() -> void:
 	pass
@@ -141,6 +166,23 @@ func get_color(data:PlanetData = get_data()) -> Color:
 			var l = get_modifier(LAND_USE)/data.area_per_tile
 			if l == 0: return _normal_color(data)
 			return Color(l,l,l)
+		10:
+			if !Global.map_detail is Array: return Color.BLACK
+			var m = Global.map_detail[0]
+			var g = Global.goods[Global.map_detail[1]]
+			match m:
+				0:
+					if data.max_consume[g.id] == 0: return Color(0,0,0)
+					return Color(consume.get(g.id,0)/data.max_consume[g.id],0,0)
+				1:
+					if data.max_produce[g.id] == 0: return Color(0,0,0)
+					return Color(0,produce.get(g.id,0)/data.max_produce[g.id],0)
+				2:
+					if is_ocean(data): return Color.BLACK
+					var minp = g.base_price*0.2
+					var maxp = g.base_price*1.8
+					return Color.GREEN.lerp(Color.RED,(good_prices.get(g.id,minp) - minp)/(maxp - minp))
+					#return Color(0,0,(good_prices.get(g.id,minp) - minp)/(maxp - minp))
 	return Color.WHITE
 
 func get_neighbours_pos(data:PlanetData = get_data()) -> Array[Vector3i]:
@@ -256,8 +298,8 @@ func update(t,planet : Planet = get_planet(),data : PlanetData = get_data()):
 			for pop2 in pops:
 				if pop != pop2:
 					if pop.try_merge(pop2):
+						if pop.building != null: buildings[pop.building].pops.erase(pop)
 						pops.erase(pop)
-						return
 	tech_points += get_modifier(RESEARCH_ADD)*float(t)
 	if tech_points > 0:
 		var spread_points = tech_points * 10.0
@@ -290,6 +332,10 @@ func update(t,planet : Planet = get_planet(),data : PlanetData = get_data()):
 	else:
 		if build_points > 0.0:
 			pass
+	for b : Building in buildings.values():
+		b.update(t,self)
+	if !is_ocean():
+		update_goods(data)
 
 
 func is_ocean(data:PlanetData = get_data()):
@@ -325,13 +371,14 @@ static func from_save_data(s, planet : Planet, data : PlanetData) -> PlanetTile:
 	t.cold = s.cold
 	t.forest = s.forest
 	t.pos = s.pos
+	for b in s.buildings:
+		t.buildings[b.type] = Building.from_save_data(b)
 	for pop in s.pops:
-		t.pops.append(POP.from_save_data(pop))
+		t.pops.append(POP.from_save_data(pop,t))
 	t.polity = s.polity
 	t.tech_points = s.tech_points
 	t.build_points = s.build_points
-	for b in s.buildings:
-		t.buildings[b.type] = Building.from_save_data(b)
 	t.techs = s.techs
 	t.update_modifiers()
+	t.update_goods(data)
 	return t

@@ -68,6 +68,10 @@ icon = ExtResource("3_6avxv")
 layout_mode = 2
 icon = ExtResource("4_tvba6")
 
+[node name="PopDisplayButton" type="Button" parent="TabContainer/Tile/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+icon = ExtResource("3_0dy3y")
+
 [node name="HBoxContainer2" type="HBoxContainer" parent="TabContainer/Tile/VBoxContainer"]
 layout_mode = 2
 
@@ -100,6 +104,7 @@ text = "X"
 [connection signal="pressed" from="TabContainer/System/HFlowContainer/PolitiesButton" to="." method="_on_polities_button_pressed"]
 [connection signal="pressed" from="TabContainer/Tile/VBoxContainer/HBoxContainer/BuildingButton" to="." method="_on_building_button_pressed"]
 [connection signal="pressed" from="TabContainer/Tile/VBoxContainer/HBoxContainer/TechButton" to="." method="_on_tech_button_pressed"]
+[connection signal="pressed" from="TabContainer/Tile/VBoxContainer/HBoxContainer/PopDisplayButton" to="." method="_on_pop_display_button_pressed"]
 [connection signal="pressed" from="TabContainer/Tile/VBoxContainer/HBoxContainer2/ForestButton" to="." method="_on_forest_button_pressed"]
 [connection signal="pressed" from="TabContainer/Tile/VBoxContainer/HBoxContainer2/PopButton" to="." method="_on_pop_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Button" to="." method="hide"]

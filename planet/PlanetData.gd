@@ -18,6 +18,11 @@ var max_pop = 1
 var nmax_pop = 1
 var pop = 0
 var npop = 0
+var max_produce : Dictionary[StringName,float] = {}
+var nmax_produce : Dictionary[StringName,float] = {}
+var max_consume : Dictionary[StringName,float] = {}
+var nmax_consume : Dictionary[StringName,float] = {}
+
 
 func gen_tiles(planet:Planet):
 	var wp = weakref(planet)
@@ -53,14 +58,22 @@ func gen_tiles(planet:Planet):
 		tile.data_ref = wd
 	#tiles[Vector3i.ZERO].pops.append(POP.new(100))
 	generating_tiles = false
+	for good in Global.goods.keys():
+		max_consume[good] = 0
+		max_produce[good] = 0
 
 func update(t,planet):
 	nmax_pop = 1
 	npop = 0
+	for good in Global.goods.keys():
+		nmax_consume[good] = 0
+		nmax_produce[good] = 0
 	for tile : PlanetTile in tiles.values():
 		tile.update(t,planet,self)
 	max_pop = nmax_pop
 	pop = npop
+	max_consume = nmax_consume
+	max_produce = nmax_produce
 
 func get_texture(normal) -> ImageTexture:
 	var img = Image.create(texture_resolution,texture_resolution,false,Image.FORMAT_RGB8)

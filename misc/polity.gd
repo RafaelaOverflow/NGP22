@@ -64,7 +64,7 @@ func update(t,planet:Planet,data:PlanetData,tile:PlanetTile):
 			var te : PlanetTile = avbuildt[i]
 			var avbp = bp*(float(tpop2[i])/float(pop2))
 			var l = b.get_limit(te)
-			te.expand_building(b.id,min(avbp,b.cost*float(l)))
+			te.expand_building(b.id,max(min(avbp,b.cost*float(l)),0))
 	
 
 

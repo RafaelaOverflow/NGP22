@@ -83,3 +83,7 @@ static func clean_children(node:Node) -> void:
 	for child :Node in node.get_children():
 		node.remove_child(child)
 		child.propagate_call("queue_free")
+
+static func modify(modifiers,key,value):
+	if !modifiers.has(key): modifiers[key] = value
+	else: modifiers[key] += value

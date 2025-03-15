@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=3 uid="uid://cd5apumrfml4m"]
+[gd_scene load_steps=100 format=3 uid="uid://cd5apumrfml4m"]
 
 [ext_resource type="Script" uid="uid://m2u71yjbpcqg" path="res://global/global.gd" id="1_jlmgm"]
 [ext_resource type="Shader" uid="uid://d34an60rewr2v" path="res://global/planet.gdshader" id="2_84sqh"]
@@ -29,8 +29,11 @@
 [ext_resource type="PackedScene" uid="uid://4svigsfnmmnu" path="res://ui/building_display.tscn" id="14_13fqp"]
 [ext_resource type="Script" uid="uid://c617rjebh58fy" path="res://misc/limit/POPLimit.gd" id="15_o1xc4"]
 [ext_resource type="PackedScene" uid="uid://fnr2t4vp8jm5" path="res://ui/tech_tree.tscn" id="16_u02yw"]
+[ext_resource type="Script" uid="uid://mhao8ir6uof2" path="res://misc/good.gd" id="17_ijdv0"]
 [ext_resource type="Theme" uid="uid://2yyynasshus1" path="res://themes/default.tres" id="17_miy2q"]
 [ext_resource type="Theme" uid="uid://ba3dvr4p5y0nn" path="res://themes/pink.tres" id="18_nhdwa"]
+[ext_resource type="Texture2D" uid="uid://dcchxilbwmmp0" path="res://textures/ui/placeholder.png" id="18_uea2g"]
+[ext_resource type="PackedScene" uid="uid://dqlshvenfg5dk" path="res://ui/pop_display.tscn" id="24_h1c8t"]
 [ext_resource type="Script" uid="uid://bsqomyqq8o3i1" path="res://misc/localizer.gd" id="24_simij"]
 [ext_resource type="Script" uid="uid://cl2yut0pnkpl" path="res://misc/localizer_target.gd" id="25_xgmct"]
 
@@ -63,9 +66,40 @@ on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_miy2q")])
 modifiers = Array[ExtResource("8_v3gnm")]([])
 metadata/_custom_type_script = "uid://b4g0i85l02pw8"
 
+[sub_resource type="Resource" id="Resource_enxlj"]
+script = ExtResource("9_nopno")
+mod = 2
+target = &"RemoveHG"
+metadata/_custom_type_script = "uid://b2xvvcmgvhe48"
+
 [sub_resource type="Resource" id="Resource_simij"]
 script = ExtResource("7_7vvuh")
 building_type = &"builder"
+metadata/_custom_type_script = "uid://c6ngg4iut2v73"
+
+[sub_resource type="Resource" id="Resource_stvpq"]
+script = ExtResource("5_rlu6y")
+tech = &"tool"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_vrgf1"]
+script = ExtResource("5_rlu6y")
+tech = &"mining"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_owc86"]
+script = ExtResource("3_yschh")
+tech_tree_pos = Vector2(0, 2)
+id = &"brick"
+cost = 3000.0
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_stvpq"), SubResource("Resource_vrgf1")])
+on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_simij")])
+modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_enxlj")])
+metadata/_custom_type_script = "uid://b4g0i85l02pw8"
+
+[sub_resource type="Resource" id="Resource_mrl1j"]
+script = ExtResource("7_7vvuh")
+building_type = &"quarry"
 metadata/_custom_type_script = "uid://c6ngg4iut2v73"
 
 [sub_resource type="Resource" id="Resource_xgmct"]
@@ -78,14 +112,14 @@ script = ExtResource("5_rlu6y")
 tech = &"writing"
 metadata/_custom_type_script = "uid://663fqonck66p"
 
-[sub_resource type="Resource" id="Resource_owc86"]
+[sub_resource type="Resource" id="Resource_m4rt3"]
 script = ExtResource("3_yschh")
-tech_tree_pos = Vector2(0, 1)
-id = &"brick"
-cost = 2500.0
+tech_tree_pos = Vector2(-1, 1)
+id = &"mining"
+cost = 2000.0
 requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_xgmct"), SubResource("Resource_u02yw")])
-on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_simij")])
-modifiers = Array[ExtResource("8_v3gnm")]([])
+on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_mrl1j")])
+modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_enxlj")])
 metadata/_custom_type_script = "uid://b4g0i85l02pw8"
 
 [sub_resource type="Resource" id="Resource_kvenq"]
@@ -103,6 +137,27 @@ on_discovery = Array[ExtResource("4_dk7jd")]([])
 modifiers = Array[ExtResource("8_v3gnm")]([])
 metadata/_custom_type_script = "uid://b4g0i85l02pw8"
 
+[sub_resource type="Resource" id="Resource_btkm7"]
+script = ExtResource("7_7vvuh")
+building_type = &"tool"
+metadata/_custom_type_script = "uid://c6ngg4iut2v73"
+
+[sub_resource type="Resource" id="Resource_v257o"]
+script = ExtResource("3_yschh")
+tech_tree_pos = Vector2(0, 1)
+id = &"tool"
+cost = 2000.0
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_xgmct"), SubResource("Resource_u02yw")])
+on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_btkm7")])
+modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_enxlj")])
+metadata/_custom_type_script = "uid://b4g0i85l02pw8"
+
+[sub_resource type="Resource" id="Resource_nobdl"]
+script = ExtResource("9_nopno")
+mod = 1
+target = &"RemoveHG"
+metadata/_custom_type_script = "uid://b2xvvcmgvhe48"
+
 [sub_resource type="Resource" id="Resource_nhdwa"]
 script = ExtResource("7_7vvuh")
 building_type = &"research"
@@ -115,6 +170,21 @@ id = &"writing"
 cost = 1500.0
 requirements = Array[ExtResource("4_rlu6y")]([])
 on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_nhdwa")])
+modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_nobdl")])
+metadata/_custom_type_script = "uid://b4g0i85l02pw8"
+
+[sub_resource type="Resource" id="Resource_ebhem"]
+script = ExtResource("5_rlu6y")
+tech = &"oreligion"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_8qwew"]
+script = ExtResource("3_yschh")
+tech_tree_pos = Vector2(1, 2)
+id = &"monarchy"
+cost = 3000.0
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_ebhem")])
+on_discovery = Array[ExtResource("4_dk7jd")]([])
 modifiers = Array[ExtResource("8_v3gnm")]([])
 metadata/_custom_type_script = "uid://b4g0i85l02pw8"
 
@@ -142,6 +212,14 @@ id = &"builder"
 limits = Array[ExtResource("10_oto3s")]([SubResource("Resource_dobe7")])
 requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_o1xc4")])
 modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_h1c8t")])
+hire = Dictionary[int, int]({
+2: 475,
+4: 25
+})
+consume = Dictionary[StringName, float]({
+&"stone": 100.0
+})
+produce = Dictionary[StringName, float]({})
 metadata/_custom_type_script = "uid://du5ypbydfb80t"
 
 [sub_resource type="Resource" id="Resource_sfw8g"]
@@ -152,7 +230,7 @@ metadata/_custom_type_script = "uid://4pa3y203wyq2"
 
 [sub_resource type="Resource" id="Resource_ugssu"]
 script = ExtResource("9_nopno")
-mod = 50
+mod = 100
 target = &"AddPopCap"
 metadata/_custom_type_script = "uid://b2xvvcmgvhe48"
 
@@ -169,6 +247,76 @@ id = &"farm"
 limits = Array[ExtResource("10_oto3s")]([SubResource("Resource_sfw8g")])
 requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_8noso")])
 modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_ugssu")])
+hire = Dictionary[int, int]({
+3: 85,
+8: 5
+})
+consume = Dictionary[StringName, float]({})
+produce = Dictionary[StringName, float]({
+&"food": 100.0
+})
+metadata/_custom_type_script = "uid://du5ypbydfb80t"
+
+[sub_resource type="Resource" id="Resource_y8as5"]
+script = ExtResource("13_vlbmg")
+area = 1
+proportion = 0.001
+metadata/_custom_type_script = "uid://4pa3y203wyq2"
+
+[sub_resource type="Resource" id="Resource_1p8oe"]
+script = ExtResource("5_rlu6y")
+tech = &"tool"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_7i4x7"]
+script = ExtResource("7_u14jd")
+cost = 100.0
+land_use = 1.0
+id = &"logging"
+limits = Array[ExtResource("10_oto3s")]([SubResource("Resource_y8as5")])
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_1p8oe")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+hire = Dictionary[int, int]({
+2: 49,
+4: 1
+})
+consume = Dictionary[StringName, float]({
+&"tools": 5.0
+})
+produce = Dictionary[StringName, float]({
+&"wood": 50.0
+})
+metadata/_custom_type_script = "uid://du5ypbydfb80t"
+
+[sub_resource type="Resource" id="Resource_o041u"]
+script = ExtResource("13_vlbmg")
+area = 0
+proportion = 0.0
+metadata/_custom_type_script = "uid://4pa3y203wyq2"
+
+[sub_resource type="Resource" id="Resource_4raum"]
+script = ExtResource("5_rlu6y")
+tech = &"mining"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_dmhl5"]
+script = ExtResource("7_u14jd")
+cost = 500.0
+land_use = 0.1
+id = &"quarry"
+limits = Array[ExtResource("10_oto3s")]([SubResource("Resource_o041u")])
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_4raum")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+hire = Dictionary[int, int]({
+2: 98,
+4: 2
+})
+consume = Dictionary[StringName, float]({
+&"tools": 5.0
+})
+produce = Dictionary[StringName, float]({
+&"stone": 100.0
+})
 metadata/_custom_type_script = "uid://du5ypbydfb80t"
 
 [sub_resource type="Resource" id="Resource_eft0r"]
@@ -195,6 +343,68 @@ id = &"research"
 limits = Array[ExtResource("10_oto3s")]([SubResource("Resource_eft0r")])
 requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_vlbmg")])
 modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_13fqp")])
+hire = Dictionary[int, int]({
+2: 40,
+6: 5,
+7: 5
+})
+consume = Dictionary[StringName, float]({})
+produce = Dictionary[StringName, float]({})
+metadata/_custom_type_script = "uid://du5ypbydfb80t"
+
+[sub_resource type="Resource" id="Resource_hphlv"]
+script = ExtResource("15_o1xc4")
+p = 10000
+metadata/_custom_type_script = "uid://c617rjebh58fy"
+
+[sub_resource type="Resource" id="Resource_6vyew"]
+script = ExtResource("5_rlu6y")
+tech = &"oreligion"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_mwg51"]
+script = ExtResource("7_u14jd")
+cost = 200.0
+land_use = 0.1
+id = &"temple"
+limits = Array[ExtResource("10_oto3s")]([SubResource("Resource_hphlv")])
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_6vyew")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+hire = Dictionary[int, int]({
+12: 50
+})
+consume = Dictionary[StringName, float]({})
+produce = Dictionary[StringName, float]({})
+metadata/_custom_type_script = "uid://du5ypbydfb80t"
+
+[sub_resource type="Resource" id="Resource_e8jiy"]
+script = ExtResource("15_o1xc4")
+p = 10000
+metadata/_custom_type_script = "uid://c617rjebh58fy"
+
+[sub_resource type="Resource" id="Resource_guski"]
+script = ExtResource("5_rlu6y")
+tech = &"tool"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_ikvwm"]
+script = ExtResource("7_u14jd")
+cost = 100.0
+land_use = 0.02
+id = &"tool"
+limits = Array[ExtResource("10_oto3s")]([SubResource("Resource_e8jiy")])
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_guski")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+hire = Dictionary[int, int]({
+2: 49,
+4: 1
+})
+consume = Dictionary[StringName, float]({
+&"wood": 10.0
+})
+produce = Dictionary[StringName, float]({
+&"tools": 50.0
+})
 metadata/_custom_type_script = "uid://du5ypbydfb80t"
 
 [sub_resource type="Resource" id="Resource_ijdv0"]
@@ -220,6 +430,34 @@ script = ExtResource("12_h01n4")
 id = &"oil"
 map_color = Color(0, 0, 0, 1)
 metadata/_custom_type_script = "uid://cefglg3ix360g"
+
+[sub_resource type="Resource" id="Resource_0cosh"]
+script = ExtResource("17_ijdv0")
+id = &"food"
+base_price = 10.0
+texture = ExtResource("18_uea2g")
+metadata/_custom_type_script = "uid://mhao8ir6uof2"
+
+[sub_resource type="Resource" id="Resource_ji2mo"]
+script = ExtResource("17_ijdv0")
+id = &"stone"
+base_price = 15.0
+texture = ExtResource("18_uea2g")
+metadata/_custom_type_script = "uid://mhao8ir6uof2"
+
+[sub_resource type="Resource" id="Resource_rmlkd"]
+script = ExtResource("17_ijdv0")
+id = &"tools"
+base_price = 25.0
+texture = ExtResource("18_uea2g")
+metadata/_custom_type_script = "uid://mhao8ir6uof2"
+
+[sub_resource type="Resource" id="Resource_8vo38"]
+script = ExtResource("17_ijdv0")
+id = &"wood"
+base_price = 10.0
+texture = ExtResource("18_uea2g")
+metadata/_custom_type_script = "uid://mhao8ir6uof2"
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_aewma"]
 fractal_gain = 0.635
@@ -271,19 +509,32 @@ color_ramps = Dictionary[StringName, Gradient]({
 techs = Dictionary[StringName, ExtResource("3_yschh")]({
 &"agriculture": SubResource("Resource_0l0ow"),
 &"brick": SubResource("Resource_owc86"),
+&"mining": SubResource("Resource_m4rt3"),
+&"monarchy": SubResource("Resource_8qwew"),
 &"oreligion": SubResource("Resource_6sa6c"),
+&"tool": SubResource("Resource_v257o"),
 &"writing": SubResource("Resource_u14jd")
 })
 building_types = Dictionary[StringName, ExtResource("7_u14jd")]({
 &"builder": SubResource("Resource_h01n4"),
 &"farm": SubResource("Resource_v3gnm"),
-&"research": SubResource("Resource_7vvuh")
+&"logging": SubResource("Resource_7i4x7"),
+&"quarry": SubResource("Resource_dmhl5"),
+&"research": SubResource("Resource_7vvuh"),
+&"temple": SubResource("Resource_mwg51"),
+&"tool": SubResource("Resource_ikvwm")
 })
 resource_types = Dictionary[StringName, ExtResource("12_h01n4")]({
 &"coal": SubResource("Resource_ijdv0"),
 &"gold": SubResource("Resource_uea2g"),
 &"iron": SubResource("Resource_oto3s"),
 &"oil": SubResource("Resource_hm5nq")
+})
+goods = Dictionary[StringName, ExtResource("17_ijdv0")]({
+&"food": SubResource("Resource_0cosh"),
+&"stone": SubResource("Resource_ji2mo"),
+&"tools": SubResource("Resource_rmlkd"),
+&"wood": SubResource("Resource_8vo38")
 })
 base_noise = Dictionary[StringName, FastNoiseLite]({
 &"base": SubResource("FastNoiseLite_aewma"),
@@ -317,6 +568,9 @@ visible = false
 [node name="TechTree" parent="." instance=ExtResource("16_u02yw")]
 visible = false
 
+[node name="PopDisplay" parent="." instance=ExtResource("24_h1c8t")]
+visible = false
+
 [node name="TimeThing" parent="." instance=ExtResource("8_0l0ow")]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
@@ -327,6 +581,16 @@ offset_left = -14.0
 offset_bottom = 31.0
 grow_horizontal = 0
 alignment = 2
+
+[node name="GoodDetail" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
+item_count = 3
+popup/item_0/id = 0
+popup/item_1/id = 1
+popup/item_2/id = 2
+
+[node name="GoodDetail2" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
 
 [node name="ScienceDetail" type="OptionButton" parent="HBoxContainer"]
 layout_mode = 2
@@ -387,6 +651,8 @@ script = ExtResource("24_simij")
 to_localize = Array[ExtResource("25_xgmct")]([SubResource("Resource_hjsae"), SubResource("Resource_6sfye"), SubResource("Resource_x5hde"), SubResource("Resource_aipfm")])
 metadata/_custom_type_script = "uid://bsqomyqq8o3i1"
 
+[connection signal="item_selected" from="HBoxContainer/GoodDetail" to="." method="_on_good_detail_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/GoodDetail2" to="." method="_on_good_detail_2_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/ScienceDetail" to="." method="_on_science_detail_item_selected"]
 [connection signal="toggled" from="HBoxContainer/LightButton" to="." method="_on_light_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/RotateWithPlanetButton" to="." method="_on_rotate_with_planet_button_toggled"]

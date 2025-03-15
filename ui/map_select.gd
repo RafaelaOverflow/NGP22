@@ -64,3 +64,9 @@ func _on_polity_button_pressed() -> void:
 func _on_land_use_button_pressed() -> void:
 	Global.map_mode = 9
 	hide()
+
+
+func _on_good_button_pressed() -> void:
+	Global.map_mode = 10
+	Global.map_detail = [Global.good_detail.selected,Global.goods.keys()[Global.good_detail_2.selected]]
+	hide()

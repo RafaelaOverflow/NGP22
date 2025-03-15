@@ -25,13 +25,61 @@
 		},
 		"tech" : {
 			"agriculture" : "Agriculture",
-			"brick" : "Rudimentary Buildings",
+			"brick" : "Rudimentary Construction",
 			"oreligion" : "Organized Religion",
-			"writing" : "Writing"
+			"writing" : "Writing",
+			"tool" : "Tooling",
+			"mining" : "Mining",
+			"monarchy" : "Divine Right"
 		},
 		"building" : {
 			"farm" : "Farm",
 			"research" : "Library",
+			"builder" : "Construction Sector",
+			"temple" : "Temple",
+			"quarry" : "Quarry",
+			"logging" : "Logging Area",
+			"tool" : "Tooling Workshop"
+			
+		},
+		"good" : {
+			"food" : "Food",
+			"stone" : "Stone",
+			"tools" : "Tools",
+			"wood" : "Wood"
+		},
+		"pop" : {
+			"job" : {
+				"0" : "Hunter-Gatherer",
+				"1" : "Unemployed",
+				"2" : "Laborer",
+				"3" : "Peasant",
+				"4" : "Engineer",
+				"5" : "Farmer",
+				"6" : "Scholar",
+				"7" : "Clerk",
+				"8" : "Aristocrat",
+				"9" : "Officer",
+				"10" : "Servicemen",
+				"11" : "Capitalist",
+				"12" : "Preacher",
+				"13" : "Bureaucrat",
+				"14" : "Politician"
+			} 
+		},
+		"map_mode" : {
+			"0" : "Normal",
+			"10" : "Goods",
+			"10_d0" : "Consumption",
+			"10_d1" : "Production",
+			"10_d2" : "Local Price",
+
+		},
+		"individual_building_display" : {
+			"consumption" : "Consumption",
+			"production" : "Production"
+		},
+		"cam_map_tip" : {
 			
 		}
 	}

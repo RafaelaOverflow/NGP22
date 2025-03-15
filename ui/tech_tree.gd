@@ -23,10 +23,10 @@ func _process(delta: float) -> void:
 	if visible: 
 		sub_viewport.size = tree_display.size
 		if mouse_on:
-			var z = clamp(camera_2d.zoom.x-Input.get_axis("zoom+","zoom-")*delta,0.5,2.0)
+			var z = clamp(camera_2d.zoom.x-Input.get_axis("zoom+","zoom-")*delta,0.1,5.0)
 			camera_2d.zoom = Vector2(z,z)
 			if Input.is_action_pressed("click"):
-				#mouse_pos *= 0.0025
+				mouse_pos /= z
 				var yaw = mouse_pos.x
 				var pitch = mouse_pos.y
 				mouse_pos = Vector2.ZERO

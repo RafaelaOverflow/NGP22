@@ -14,6 +14,10 @@ func _process(delta: float) -> void:
 		i+=1
 		if Input.is_action_just_pressed("%s"%i):
 			set_speed(i)
+	if Input.is_action_just_pressed("timedown"):
+		set_speed(max(0,speed-1))
+	if Input.is_action_just_pressed("timeup"):
+		set_speed(min(speed+1,9))
 
 func set_speed(_speed):
 	speed = _speed

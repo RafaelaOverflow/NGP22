@@ -15,6 +15,6 @@ func is_available(tile:PlanetTile):
 				if !tile.has_tech(r.tech): return false
 	return true
 
-func modify(tile:PlanetTile) -> void:
+func modify(tile:PlanetTile,d:Dictionary) -> void:
 	for m : Modifier in modifiers:
-		tile.modify(m.target,m.mod)
+		Util.modify(d,m.target,m.mod)

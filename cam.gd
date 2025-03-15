@@ -95,6 +95,15 @@ func do_physics(delta):
 						if Global.map_detail is StringName: label.text = ("%.2f" % (tile.techs.get(Global.map_detail,0.0)*100.0))+"%"
 					9:
 						label.text = ("%.2f km² - " % tile.get_modifier(PlanetTile.LAND_USE))+("%.2f" % (tile.get_modifier(PlanetTile.LAND_USE)/col.data.area_per_tile))+"%"
+					10:
+						if Global.map_detail is Array:
+							match Global.map_detail[0]:
+								0:
+									label.text = "%.2f" % tile.consume.get(Global.map_detail[1],0)
+								1:
+									label.text = "%.2f" % tile.produce.get(Global.map_detail[1],0)
+								2:
+									label.text = "$%.2f" % tile.good_prices.get(Global.map_detail[1],Global.goods[Global.map_detail[1]].base_price*0.2)
 				if Input.is_action_just_pressed("click"):
 					Global.display_tile_info(tile,col)
 					match Global.map_mode:

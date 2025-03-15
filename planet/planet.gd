@@ -10,7 +10,7 @@ class_name Planet
 @export var data : PlanetData = null
 @onready var faces = [$PlanetFace, $PlanetFace2, $PlanetFace3, $PlanetFace4, $PlanetFace5, $PlanetFace6]
 @onready var atmosphere: MeshInstance3D = $Atmosphere
-var tex_thread : ContinuousThread = null
+var threads : Array[ContinuousThread] = []
 
 var cd = 0
 var orbit_time = 0
@@ -26,7 +26,8 @@ func _ready() -> void:
 		add_to_group("planet")
 		for face in faces:
 			face.regenerate_mesh(data)
-		tex_thread = ContinuousThread.new(update)
+		threads.append(ContinuousThread.new(update))
+		threads.append(ContinuousThread.new(update_tex))
 		position.x = cd
 		if pt.yd == 0:
 			pt.yd = int(position.x/74)
@@ -36,8 +37,9 @@ func _ready() -> void:
 	atmosphere.set_instance_shader_parameter("a",data.atmosphere)
 
 func _physics_process(delta: float) -> void:
-	if tex_thread != null and tex_thread.finished:
-		tex_thread = null
+	for thread in threads:
+		if thread != null and thread.finished:
+			threads.erase(thread)
 	rotate_y(rotate_speed*delta*Global.time_scale)
 	if Global.rotate_with_planet: camera_holder.rotate_y(-rotate_speed*delta*Global.time_scale)
 	p = fposmod((delta/orbit_time)*Global.time_scale+p,1.0)
@@ -51,10 +53,6 @@ var tex_update = false
 var last_map_mode = 0
 var last_t = 0
 func update():
-	if Global.map_mode != last_map_mode or tex_update:
-		last_map_mode = Global.map_mode
-		for face in faces:
-			face.update_material(data)
 	var nt = Global.t
 	if nt != last_t:
 		var t
@@ -66,7 +64,13 @@ func update():
 		last_t = nt
 		data.update(t,self)
 		tex_update = true
-	
+
+func update_tex():
+	if Global.map_mode != last_map_mode or tex_update:
+		var tex_update = false
+		last_map_mode = Global.map_mode
+		for face in faces:
+			face.update_material(data)
 
 func get_save_data() -> Dictionary:
 	var s = {}
