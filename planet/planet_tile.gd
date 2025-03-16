@@ -45,6 +45,7 @@ func add_tech_progress(tid,p:float):
 	techs[tid] = min(techs[tid]+(p/tech.cost),1.0)
 	return x
 var tech_points : float = 0
+var focus = null
 var buildings : Dictionary[StringName,Building]
 func get_building_size(type:StringName):
 	if !buildings.has(type): return 0
@@ -144,6 +145,7 @@ func get_color(data:PlanetData = get_data()) -> Color:
 		2:
 			return Color.ORANGE_RED.lerp(Color.BLUE,cold)
 		3:
+			if is_ocean(data): return Color.BLUE
 			var p = float(get_total_pop())/float(data.max_pop)
 			if p == 0: return Color.BLACK
 			p = p*0.9+0.1
@@ -151,18 +153,22 @@ func get_color(data:PlanetData = get_data()) -> Color:
 		4:
 			return Color(float(id.x)/float(data.texture_resolution-1),float(id.y)/float(data.texture_resolution-1),float(id.z)/6.0)
 		5:
+			if is_ocean(data): return Color.BLUE
 			return Color(0,forest,0)
 		6:
 			if is_ocean(data): return Color(0,0,1)
 			return Color(0,0,humidity)
 		7:
+			if is_ocean(data): return Color.BLUE
 			if polity == null: return _normal_color(data)
 			return get_polity().color
 		8:
+			if is_ocean(data): return Color.BLUE
 			if !Global.map_detail is StringName: return _normal_color(data)
 			var c = techs.get(Global.map_detail,0.0)
 			return Color(c,c,c)
 		9:
+			if is_ocean(data): return Color.BLUE
 			var l = get_modifier(LAND_USE)/data.area_per_tile
 			if l == 0: return _normal_color(data)
 			return Color(l,l,l)
@@ -172,13 +178,15 @@ func get_color(data:PlanetData = get_data()) -> Color:
 			var g = Global.goods[Global.map_detail[1]]
 			match m:
 				0:
+					if is_ocean(data): return Color.BLUE
 					if data.max_consume[g.id] == 0: return Color(0,0,0)
 					return Color(consume.get(g.id,0)/data.max_consume[g.id],0,0)
 				1:
+					if is_ocean(data): return Color.BLUE
 					if data.max_produce[g.id] == 0: return Color(0,0,0)
 					return Color(0,produce.get(g.id,0)/data.max_produce[g.id],0)
 				2:
-					if is_ocean(data): return Color.BLACK
+					if is_ocean(data): return Color.BLUE
 					var minp = g.base_price*0.2
 					var maxp = g.base_price*1.8
 					return Color.GREEN.lerp(Color.RED,(good_prices.get(g.id,minp) - minp)/(maxp - minp))
@@ -302,17 +310,23 @@ func update(t,planet : Planet = get_planet(),data : PlanetData = get_data()):
 						pops.erase(pop)
 	tech_points += get_modifier(RESEARCH_ADD)*float(t)
 	if tech_points > 0:
+		if focus == null or has_tech(focus):
+			focus = null
+			var possible = []
+			for tech : Tech in Global.techs.values():
+				if !has_tech(tech.id) and tech.is_available(self):
+					possible.append(tech)
+			if possible.size() > 0: focus = possible.pick_random().id
+		if focus != null:
+			var tech = Global.techs[focus]
+			tech_points -= add_tech_progress(tech.id,tech_points)
+			if has_tech(tech.id):
+				for e : Event in tech.on_discovery:
+					match e.type:
+						Event.ADD_BUILDING:
+							add_building(e.building_type)
 		var spread_points = tech_points * 10.0
-		for tech : Tech in Global.techs.values():
-			if !has_tech(tech.id):
-				if tech.is_available(self):
-					tech_points -= add_tech_progress(tech.id,tech_points)
-					if has_tech(tech.id):
-						for e : Event in tech.on_discovery:
-							match e.type:
-								Event.ADD_BUILDING:
-									add_building(e.building_type)
-				if tech_points <= 0: break
+		
 		for n in get_neighbours(data):
 			if n.has_pop():
 				for techid in techs.keys():

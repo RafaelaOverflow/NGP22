@@ -48,13 +48,13 @@ func update():
 		for key in bt.consume.keys():
 			var button = consume[i]
 			button.text = "%s" % (bt.consume[key]*float(b.size)*h)
-			button.tooltip_text = "%s - %.2f" % [Global.localize("good.%s" % key),tile.good_prices.get(key)]
+			button.tooltip_text = "%s - $%.2f" % [Global.localize("good.%s" % key),tile.good_prices.get(key)]
 			i+=1
 		i=0
 		for key in bt.produce.keys():
 			var button = produce[i]
 			button.text = "%s" % (bt.produce[key]*float(b.size)*h)
-			button.tooltip_text = "%s - %.2f" % [Global.localize("good.%s" % key),tile.good_prices.get(key)]
+			button.tooltip_text = "%s - $%.2f" % [Global.localize("good.%s" % key),tile.good_prices.get(key)]
 			i+=1
 
 func _process(delta: float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=3 uid="uid://cd5apumrfml4m"]
+[gd_scene load_steps=103 format=3 uid="uid://cd5apumrfml4m"]
 
 [ext_resource type="Script" uid="uid://m2u71yjbpcqg" path="res://global/global.gd" id="1_jlmgm"]
 [ext_resource type="Shader" uid="uid://d34an60rewr2v" path="res://global/planet.gdshader" id="2_84sqh"]
@@ -31,8 +31,11 @@
 [ext_resource type="PackedScene" uid="uid://fnr2t4vp8jm5" path="res://ui/tech_tree.tscn" id="16_u02yw"]
 [ext_resource type="Script" uid="uid://mhao8ir6uof2" path="res://misc/good.gd" id="17_ijdv0"]
 [ext_resource type="Theme" uid="uid://2yyynasshus1" path="res://themes/default.tres" id="17_miy2q"]
+[ext_resource type="Texture2D" uid="uid://b0tlekc7y7tof" path="res://textures/goods/food.png" id="18_hm5nq"]
 [ext_resource type="Theme" uid="uid://ba3dvr4p5y0nn" path="res://themes/pink.tres" id="18_nhdwa"]
-[ext_resource type="Texture2D" uid="uid://dcchxilbwmmp0" path="res://textures/ui/placeholder.png" id="18_uea2g"]
+[ext_resource type="Texture2D" uid="uid://lgsuyn3a6fts" path="res://textures/goods/stone.png" id="19_hjsae"]
+[ext_resource type="Texture2D" uid="uid://c64oele7vcjc1" path="res://textures/goods/tool.png" id="20_6sfye"]
+[ext_resource type="Texture2D" uid="uid://co5fcdib45s8n" path="res://textures/goods/wood.png" id="21_6sfye"]
 [ext_resource type="PackedScene" uid="uid://dqlshvenfg5dk" path="res://ui/pop_display.tscn" id="24_h1c8t"]
 [ext_resource type="Script" uid="uid://bsqomyqq8o3i1" path="res://misc/localizer.gd" id="24_simij"]
 [ext_resource type="Script" uid="uid://cl2yut0pnkpl" path="res://misc/localizer_target.gd" id="25_xgmct"]
@@ -122,6 +125,21 @@ on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_mrl1j")])
 modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_enxlj")])
 metadata/_custom_type_script = "uid://b4g0i85l02pw8"
 
+[sub_resource type="Resource" id="Resource_ebhem"]
+script = ExtResource("5_rlu6y")
+tech = &"oreligion"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_8qwew"]
+script = ExtResource("3_yschh")
+tech_tree_pos = Vector2(1, 2)
+id = &"monarchy"
+cost = 3000.0
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_ebhem")])
+on_discovery = Array[ExtResource("4_dk7jd")]([])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+metadata/_custom_type_script = "uid://b4g0i85l02pw8"
+
 [sub_resource type="Resource" id="Resource_kvenq"]
 script = ExtResource("5_rlu6y")
 tech = &"writing"
@@ -171,21 +189,6 @@ cost = 1500.0
 requirements = Array[ExtResource("4_rlu6y")]([])
 on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_nhdwa")])
 modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_nobdl")])
-metadata/_custom_type_script = "uid://b4g0i85l02pw8"
-
-[sub_resource type="Resource" id="Resource_ebhem"]
-script = ExtResource("5_rlu6y")
-tech = &"oreligion"
-metadata/_custom_type_script = "uid://663fqonck66p"
-
-[sub_resource type="Resource" id="Resource_8qwew"]
-script = ExtResource("3_yschh")
-tech_tree_pos = Vector2(1, 2)
-id = &"monarchy"
-cost = 3000.0
-requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_ebhem")])
-on_discovery = Array[ExtResource("4_dk7jd")]([])
-modifiers = Array[ExtResource("8_v3gnm")]([])
 metadata/_custom_type_script = "uid://b4g0i85l02pw8"
 
 [sub_resource type="Resource" id="Resource_dobe7"]
@@ -435,28 +438,28 @@ metadata/_custom_type_script = "uid://cefglg3ix360g"
 script = ExtResource("17_ijdv0")
 id = &"food"
 base_price = 10.0
-texture = ExtResource("18_uea2g")
+texture = ExtResource("18_hm5nq")
 metadata/_custom_type_script = "uid://mhao8ir6uof2"
 
 [sub_resource type="Resource" id="Resource_ji2mo"]
 script = ExtResource("17_ijdv0")
 id = &"stone"
 base_price = 15.0
-texture = ExtResource("18_uea2g")
+texture = ExtResource("19_hjsae")
 metadata/_custom_type_script = "uid://mhao8ir6uof2"
 
 [sub_resource type="Resource" id="Resource_rmlkd"]
 script = ExtResource("17_ijdv0")
 id = &"tools"
 base_price = 25.0
-texture = ExtResource("18_uea2g")
+texture = ExtResource("20_6sfye")
 metadata/_custom_type_script = "uid://mhao8ir6uof2"
 
 [sub_resource type="Resource" id="Resource_8vo38"]
 script = ExtResource("17_ijdv0")
 id = &"wood"
 base_price = 10.0
-texture = ExtResource("18_uea2g")
+texture = ExtResource("21_6sfye")
 metadata/_custom_type_script = "uid://mhao8ir6uof2"
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_aewma"]

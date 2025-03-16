@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://rpiiihw2rstr" path="res://textures/ui/political.png" id="9_brb6d"]
 [ext_resource type="Texture2D" uid="uid://dyjxnv6hh2m4j" path="res://textures/ui/atom.png" id="10_mvlay"]
 [ext_resource type="Texture2D" uid="uid://cj7fggoinhx5p" path="res://textures/ui/land_use.png" id="11_i3qdl"]
-[ext_resource type="Texture2D" uid="uid://dcchxilbwmmp0" path="res://textures/ui/placeholder.png" id="12_t2ciu"]
+[ext_resource type="Texture2D" uid="uid://bram3ird1k02f" path="res://textures/ui/goods.png" id="12_t2ciu"]
 
 [node name="MapSelect" type="Control"]
 layout_mode = 3
