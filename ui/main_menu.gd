@@ -65,3 +65,13 @@ func _on_load_file_dialog_file_selected(path: String) -> void:
 	Global.polities.clear()
 	for p in s.polities:
 		Global.polities[p.id] = Polity.from_save_data(p)
+
+
+func _on_host_button_pressed() -> void:
+	Global.peer.create_server(25555)
+	multiplayer.multiplayer_peer = Global.peer
+
+
+func _on_join_button_pressed() -> void:
+	Global.peer.create_client("localhost",25555)
+	multiplayer.multiplayer_peer = Global.peer

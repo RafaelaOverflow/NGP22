@@ -57,6 +57,14 @@ layout_mode = 2
 layout_mode = 2
 text = "Continue"
 
+[node name="HostButton" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="JoinButton" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+
 [node name="SaveButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Save Game"
@@ -88,6 +96,8 @@ file_mode = 0
 access = 1
 
 [connection signal="pressed" from="VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/HostButton" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/JoinButton" to="." method="_on_join_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/LoadButton" to="." method="_on_load_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/NewGame" to="." method="_on_new_game_pressed"]

@@ -30,7 +30,8 @@
 			"writing" : "Writing",
 			"tool" : "Tooling",
 			"mining" : "Mining",
-			"monarchy" : "Divine Right"
+			"monarchy" : "Hereditary Rule",
+			"republican" : "Republicanism"
 		},
 		"building" : {
 			"farm" : "Farm",
@@ -81,6 +82,32 @@
 		},
 		"cam_map_tip" : {
 			
+		},
+		"gov_type" : {
+			"default" : "Informal Government",
+			"monarchy" : "Monarchy",
+			"theocracy" : "Theocracy",
+			"republic" : "Republic",
+			"republic_mil" : "Military Regime",
+			"republic_ari" : "Aristocratic Republic",
+			"monarchy_theo" : "Religious Monarchy",
+			"theocracy_mil" : "Holy Order",
+			"monarchy_abs" : "Absolutist Monarchy"
+		},
+		"law" : {
+			"informal_gov" : "Informal",
+			"informal_admin" : "Informal Administration",
+			"theocratic_gov" : "Theocracy",
+			"monarchic_gov" : "Monarchism",
+			"republican_gov" : "Republicanism",
+			"theocratic_admin" : "Clerical Administration",
+			"monarchic_admin" : "Aristocratic Administration",
+			"military_admin" : "Military Rule",
+			"autocracy" : "Autocracy"
+		},
+		"law_category" : {
+			"core" : "Government Spirit",
+			"power" : "Power Distribution"
 		}
 	}
 }

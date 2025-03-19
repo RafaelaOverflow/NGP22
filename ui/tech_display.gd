@@ -20,7 +20,7 @@ func create(tech : Tech, tile : PlanetTile):
 			l2d.add_point(Vector2.ZERO)
 			l2d.add_point(pl)
 			add_child(l2d)
-			l2d.position = Vector2(75,25)
+			l2d.position = Vector2(125,50)
 			l2d.default_color = Color.WHITE if tile.has_tech(t.id) else Color.BLACK
 			l2d.z_index = -10
 			lines[t.id] = l2d

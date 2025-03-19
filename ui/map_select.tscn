@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://hns21l22glpt"]
+[gd_scene load_steps=14 format=3 uid="uid://hns21l22glpt"]
 
 [ext_resource type="Texture2D" uid="uid://bmtcigu2ulb8x" path="res://textures/ui/normal.png" id="1_5cki3"]
 [ext_resource type="Script" uid="uid://3d57o4cgvfbd" path="res://ui/map_select.gd" id="1_kiem7"]
@@ -12,6 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://dyjxnv6hh2m4j" path="res://textures/ui/atom.png" id="10_mvlay"]
 [ext_resource type="Texture2D" uid="uid://cj7fggoinhx5p" path="res://textures/ui/land_use.png" id="11_i3qdl"]
 [ext_resource type="Texture2D" uid="uid://bram3ird1k02f" path="res://textures/ui/goods.png" id="12_t2ciu"]
+[ext_resource type="Texture2D" uid="uid://dcchxilbwmmp0" path="res://textures/ui/placeholder.png" id="13_sl64r"]
 
 [node name="MapSelect" type="Control"]
 layout_mode = 3
@@ -118,6 +119,12 @@ layout_mode = 2
 icon = ExtResource("12_t2ciu")
 expand_icon = true
 
+[node name="LawButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+icon = ExtResource("13_sl64r")
+expand_icon = true
+
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/NormalButton" to="." method="_on_normal_button_pressed"]
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/AltitudeButton" to="." method="_on_altitude_button_pressed"]
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/TemperatureButton" to="." method="_on_temperature_button_pressed"]
@@ -130,3 +137,4 @@ expand_icon = true
 [connection signal="item_selected" from="PanelContainer/ScrollContainer/HFlowContainer/TechButton/TechOptionButton" to="." method="_on_tech_option_button_item_selected"]
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/LandUseButton" to="." method="_on_land_use_button_pressed"]
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/GoodButton" to="." method="_on_good_button_pressed"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/LawButton" to="." method="_on_law_button_pressed"]

@@ -191,6 +191,11 @@ func get_color(data:PlanetData = get_data()) -> Color:
 					var maxp = g.base_price*1.8
 					return Color.GREEN.lerp(Color.RED,(good_prices.get(g.id,minp) - minp)/(maxp - minp))
 					#return Color(0,0,(good_prices.get(g.id,minp) - minp)/(maxp - minp))
+		11:
+			#if is_ocean(data): return Color.BLUE
+			if !Global.map_detail is StringName or polity == null: return Color.BLACK
+			var p = get_polity()
+			return Global.laws[p.laws[Global.map_detail]].map_color
 	return Color.WHITE
 
 func get_neighbours_pos(data:PlanetData = get_data()) -> Array[Vector3i]:
@@ -310,6 +315,7 @@ func update(t,planet : Planet = get_planet(),data : PlanetData = get_data()):
 						pops.erase(pop)
 	tech_points += get_modifier(RESEARCH_ADD)*float(t)
 	if tech_points > 0:
+		var spread_points = tech_points * 10.0
 		if focus == null or has_tech(focus):
 			focus = null
 			var possible = []
@@ -321,12 +327,7 @@ func update(t,planet : Planet = get_planet(),data : PlanetData = get_data()):
 			var tech = Global.techs[focus]
 			tech_points -= add_tech_progress(tech.id,tech_points)
 			if has_tech(tech.id):
-				for e : Event in tech.on_discovery:
-					match e.type:
-						Event.ADD_BUILDING:
-							add_building(e.building_type)
-		var spread_points = tech_points * 10.0
-		
+				Event.tile_events(tech.on_discovery,self)
 		for n in get_neighbours(data):
 			if n.has_pop():
 				for techid in techs.keys():
@@ -334,10 +335,7 @@ func update(t,planet : Planet = get_planet(),data : PlanetData = get_data()):
 					if has_tech(techid) and !n.has_tech(techid) and Global.techs[techid].is_available(n):
 						add_tech_progress(techid,spread_points)
 						if n.has_tech(techid):
-							for e : Event in tech.on_discovery:
-								match e.type:
-									Event.ADD_BUILDING:
-										n.add_building(e.building_type)
+							Event.tile_events(tech.on_discovery,n)
 	build_points += float(t)*get_modifier(BUILD_POINTS_ADD)
 	if polity != null:
 		var p = get_polity()

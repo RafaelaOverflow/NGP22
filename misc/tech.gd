@@ -9,11 +9,7 @@ class_name Tech
 @export var modifiers : Array[Modifier] = []
 
 func is_available(tile:PlanetTile):
-	for r in requirements:
-		match r.type:
-			Requirement.TECH:
-				if !tile.has_tech(r.tech): return false
-	return true
+	return Requirement.tile_check(requirements,tile)
 
 func modify(tile:PlanetTile,d:Dictionary) -> void:
 	for m : Modifier in modifiers:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3 uid="uid://cd5apumrfml4m"]
+[gd_scene load_steps=158 format=3 uid="uid://cd5apumrfml4m"]
 
 [ext_resource type="Script" uid="uid://m2u71yjbpcqg" path="res://global/global.gd" id="1_jlmgm"]
 [ext_resource type="Shader" uid="uid://d34an60rewr2v" path="res://global/planet.gdshader" id="2_84sqh"]
@@ -21,12 +21,16 @@
 [ext_resource type="Script" uid="uid://brwoxuu8bbht" path="res://misc/modifier/modifier.gd" id="8_v3gnm"]
 [ext_resource type="Script" uid="uid://b2xvvcmgvhe48" path="res://misc/modifier/int_modifier.gd" id="9_nopno"]
 [ext_resource type="Script" uid="uid://dx0flnn3eehkj" path="res://misc/limit/Limit.gd" id="10_oto3s"]
+[ext_resource type="Script" uid="uid://dpogmh4io8sxw" path="res://misc/event/set_law_event.gd" id="10_sfw8g"]
 [ext_resource type="Script" uid="uid://msq8w0ykpwph" path="res://misc/modifier/float_modifier.gd" id="10_ugssu"]
 [ext_resource type="Script" uid="uid://ckf3p8cormv6d" path="res://misc/limit/FlatLimit.gd" id="11_8noso"]
 [ext_resource type="Script" uid="uid://cefglg3ix360g" path="res://misc/resourcetype.gd" id="12_h01n4"]
+[ext_resource type="Script" uid="uid://fc66rmg7r648" path="res://misc/event/conditional_event.gd" id="12_hphlv"]
+[ext_resource type="Script" uid="uid://dty7yte4675sd" path="res://misc/requirement/tile_trait_requirement.gd" id="13_6vyew"]
 [ext_resource type="PackedScene" uid="uid://ci6gyuemjy6ej" path="res://cam.tscn" id="13_owc86"]
 [ext_resource type="Script" uid="uid://4pa3y203wyq2" path="res://misc/limit/AreaLimit.gd" id="13_vlbmg"]
 [ext_resource type="PackedScene" uid="uid://4svigsfnmmnu" path="res://ui/building_display.tscn" id="14_13fqp"]
+[ext_resource type="Script" uid="uid://dxi1k4tjvuvgw" path="res://misc/requirement/law_requirement.gd" id="14_mwg51"]
 [ext_resource type="Script" uid="uid://c617rjebh58fy" path="res://misc/limit/POPLimit.gd" id="15_o1xc4"]
 [ext_resource type="PackedScene" uid="uid://fnr2t4vp8jm5" path="res://ui/tech_tree.tscn" id="16_u02yw"]
 [ext_resource type="Script" uid="uid://mhao8ir6uof2" path="res://misc/good.gd" id="17_ijdv0"]
@@ -36,9 +40,11 @@
 [ext_resource type="Texture2D" uid="uid://lgsuyn3a6fts" path="res://textures/goods/stone.png" id="19_hjsae"]
 [ext_resource type="Texture2D" uid="uid://c64oele7vcjc1" path="res://textures/goods/tool.png" id="20_6sfye"]
 [ext_resource type="Texture2D" uid="uid://co5fcdib45s8n" path="res://textures/goods/wood.png" id="21_6sfye"]
+[ext_resource type="Script" uid="uid://b52m62ukksvue" path="res://misc/law.gd" id="22_x5hde"]
 [ext_resource type="PackedScene" uid="uid://dqlshvenfg5dk" path="res://ui/pop_display.tscn" id="24_h1c8t"]
 [ext_resource type="Script" uid="uid://bsqomyqq8o3i1" path="res://misc/localizer.gd" id="24_simij"]
 [ext_resource type="Script" uid="uid://cl2yut0pnkpl" path="res://misc/localizer_target.gd" id="25_xgmct"]
+[ext_resource type="Script" uid="uid://cioecwqf83q5d" path="res://misc/government_type.gd" id="27_sfw8g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xqlvv"]
 render_priority = 0
@@ -125,20 +131,74 @@ on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_mrl1j")])
 modifiers = Array[ExtResource("8_v3gnm")]([SubResource("Resource_enxlj")])
 metadata/_custom_type_script = "uid://b4g0i85l02pw8"
 
+[sub_resource type="Resource" id="Resource_2r3o0"]
+script = ExtResource("13_6vyew")
+t = 0
+metadata/_custom_type_script = "uid://dty7yte4675sd"
+
+[sub_resource type="Resource" id="Resource_mury7"]
+script = ExtResource("14_mwg51")
+law = &"informal_gov"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_715u2"]
+script = ExtResource("10_sfw8g")
+law = &"monarchic_gov"
+metadata/_custom_type_script = "uid://dpogmh4io8sxw"
+
+[sub_resource type="Resource" id="Resource_kkao5"]
+script = ExtResource("10_sfw8g")
+law = &"monarchic_admin"
+metadata/_custom_type_script = "uid://dpogmh4io8sxw"
+
+[sub_resource type="Resource" id="Resource_6uuai"]
+script = ExtResource("12_hphlv")
+success = Array[ExtResource("4_dk7jd")]([SubResource("Resource_715u2"), SubResource("Resource_kkao5")])
+fail = Array[ExtResource("4_dk7jd")]([])
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_2r3o0"), SubResource("Resource_mury7")])
+metadata/_custom_type_script = "uid://fc66rmg7r648"
+
 [sub_resource type="Resource" id="Resource_ebhem"]
 script = ExtResource("5_rlu6y")
-tech = &"oreligion"
+tech = &"writing"
 metadata/_custom_type_script = "uid://663fqonck66p"
 
 [sub_resource type="Resource" id="Resource_8qwew"]
 script = ExtResource("3_yschh")
-tech_tree_pos = Vector2(1, 2)
+tech_tree_pos = Vector2(2, 1)
 id = &"monarchy"
-cost = 3000.0
+cost = 2000.0
 requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_ebhem")])
-on_discovery = Array[ExtResource("4_dk7jd")]([])
+on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_6uuai")])
 modifiers = Array[ExtResource("8_v3gnm")]([])
 metadata/_custom_type_script = "uid://b4g0i85l02pw8"
+
+[sub_resource type="Resource" id="Resource_8qnxc"]
+script = ExtResource("13_6vyew")
+t = 0
+metadata/_custom_type_script = "uid://dty7yte4675sd"
+
+[sub_resource type="Resource" id="Resource_ffvlb"]
+script = ExtResource("14_mwg51")
+law = &"informal_gov"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_i8gvq"]
+script = ExtResource("10_sfw8g")
+law = &"theocratic_gov"
+metadata/_custom_type_script = "uid://dpogmh4io8sxw"
+
+[sub_resource type="Resource" id="Resource_lpv0i"]
+script = ExtResource("10_sfw8g")
+law = &"theocratic_admin"
+metadata/_custom_type_script = "uid://dpogmh4io8sxw"
+
+[sub_resource type="Resource" id="Resource_5dr3b"]
+script = ExtResource("12_hphlv")
+success = Array[ExtResource("4_dk7jd")]([SubResource("Resource_i8gvq"), SubResource("Resource_lpv0i")])
+fail = Array[ExtResource("4_dk7jd")]([])
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_8qnxc"), SubResource("Resource_ffvlb")])
+metadata/_custom_type_script = "uid://fc66rmg7r648"
 
 [sub_resource type="Resource" id="Resource_kvenq"]
 script = ExtResource("5_rlu6y")
@@ -151,7 +211,49 @@ tech_tree_pos = Vector2(1, 1)
 id = &"oreligion"
 cost = 2000.0
 requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_kvenq")])
-on_discovery = Array[ExtResource("4_dk7jd")]([])
+on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_5dr3b")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+metadata/_custom_type_script = "uid://b4g0i85l02pw8"
+
+[sub_resource type="Resource" id="Resource_tiofi"]
+script = ExtResource("13_6vyew")
+t = 0
+metadata/_custom_type_script = "uid://dty7yte4675sd"
+
+[sub_resource type="Resource" id="Resource_h0c6y"]
+script = ExtResource("14_mwg51")
+law = &"informal_gov"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_d6ki7"]
+script = ExtResource("10_sfw8g")
+law = &"republican_gov"
+metadata/_custom_type_script = "uid://dpogmh4io8sxw"
+
+[sub_resource type="Resource" id="Resource_pjv6b"]
+script = ExtResource("10_sfw8g")
+law = &"military_admin"
+metadata/_custom_type_script = "uid://dpogmh4io8sxw"
+
+[sub_resource type="Resource" id="Resource_y37oc"]
+script = ExtResource("12_hphlv")
+success = Array[ExtResource("4_dk7jd")]([SubResource("Resource_d6ki7"), SubResource("Resource_pjv6b")])
+fail = Array[ExtResource("4_dk7jd")]([])
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_tiofi"), SubResource("Resource_h0c6y")])
+metadata/_custom_type_script = "uid://fc66rmg7r648"
+
+[sub_resource type="Resource" id="Resource_60vtq"]
+script = ExtResource("5_rlu6y")
+tech = &"writing"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_jc1es"]
+script = ExtResource("3_yschh")
+tech_tree_pos = Vector2(3, 1)
+id = &"republic"
+cost = 2000.0
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_60vtq")])
+on_discovery = Array[ExtResource("4_dk7jd")]([SubResource("Resource_y37oc")])
 modifiers = Array[ExtResource("8_v3gnm")]([])
 metadata/_custom_type_script = "uid://b4g0i85l02pw8"
 
@@ -462,6 +564,240 @@ base_price = 10.0
 texture = ExtResource("21_6sfye")
 metadata/_custom_type_script = "uid://mhao8ir6uof2"
 
+[sub_resource type="Resource" id="Resource_a8b8t"]
+script = ExtResource("22_x5hde")
+id = &"informal_admin"
+category = &"power"
+map_color = Color(0.34, 0.34, 0.34, 1)
+requirements = Array[ExtResource("4_rlu6y")]([])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+on_set = Array[ExtResource("4_dk7jd")]([])
+metadata/_custom_type_script = "uid://b52m62ukksvue"
+
+[sub_resource type="Resource" id="Resource_a5b7m"]
+script = ExtResource("22_x5hde")
+id = &"informal_gov"
+category = &"core"
+map_color = Color(0.341176, 0.341176, 0.341176, 1)
+requirements = Array[ExtResource("4_rlu6y")]([])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+on_set = Array[ExtResource("4_dk7jd")]([])
+metadata/_custom_type_script = "uid://b52m62ukksvue"
+
+[sub_resource type="Resource" id="Resource_wy8s2"]
+script = ExtResource("5_rlu6y")
+tech = &"republic"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_dc54x"]
+script = ExtResource("22_x5hde")
+id = &"military_admin"
+category = &"power"
+map_color = Color(0, 0.58, 0.0676667, 1)
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_wy8s2")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+on_set = Array[ExtResource("4_dk7jd")]([])
+metadata/_custom_type_script = "uid://b52m62ukksvue"
+
+[sub_resource type="Resource" id="Resource_dosrt"]
+script = ExtResource("5_rlu6y")
+tech = &"monarchy"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_51o1b"]
+script = ExtResource("22_x5hde")
+id = &"monarchic_admin"
+category = &"power"
+map_color = Color(0.933333, 0, 1, 1)
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_dosrt")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+on_set = Array[ExtResource("4_dk7jd")]([])
+metadata/_custom_type_script = "uid://b52m62ukksvue"
+
+[sub_resource type="Resource" id="Resource_aefpo"]
+script = ExtResource("5_rlu6y")
+tech = &"monarchy"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_dh5gg"]
+script = ExtResource("22_x5hde")
+id = &"monarchic_gov"
+category = &"core"
+map_color = Color(1, 0, 0, 1)
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_aefpo")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+on_set = Array[ExtResource("4_dk7jd")]([])
+metadata/_custom_type_script = "uid://b52m62ukksvue"
+
+[sub_resource type="Resource" id="Resource_2glri"]
+script = ExtResource("5_rlu6y")
+tech = &"republic"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_6deqs"]
+script = ExtResource("22_x5hde")
+id = &"republican_gov"
+category = &"core"
+map_color = Color(0, 0.766667, 1, 1)
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_2glri")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+on_set = Array[ExtResource("4_dk7jd")]([])
+metadata/_custom_type_script = "uid://b52m62ukksvue"
+
+[sub_resource type="Resource" id="Resource_574tm"]
+script = ExtResource("5_rlu6y")
+tech = &"oreligion"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_kx5t4"]
+script = ExtResource("22_x5hde")
+id = &"theocratic_admin"
+category = &"power"
+map_color = Color(1, 1, 1, 1)
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_574tm")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+on_set = Array[ExtResource("4_dk7jd")]([])
+metadata/_custom_type_script = "uid://b52m62ukksvue"
+
+[sub_resource type="Resource" id="Resource_x61go"]
+script = ExtResource("5_rlu6y")
+tech = &"oreligion"
+metadata/_custom_type_script = "uid://663fqonck66p"
+
+[sub_resource type="Resource" id="Resource_2n8kg"]
+script = ExtResource("22_x5hde")
+id = &"theocratic_gov"
+category = &"core"
+map_color = Color(1, 1, 1, 1)
+requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_x61go")])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+on_set = Array[ExtResource("4_dk7jd")]([])
+metadata/_custom_type_script = "uid://b52m62ukksvue"
+
+[sub_resource type="Resource" id="Resource_dutxg"]
+script = ExtResource("22_x5hde")
+id = &"autocracy"
+category = &"power"
+map_color = Color(1, 1, 0, 1)
+requirements = Array[ExtResource("4_rlu6y")]([])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+on_set = Array[ExtResource("4_dk7jd")]([])
+metadata/_custom_type_script = "uid://b52m62ukksvue"
+
+[sub_resource type="Resource" id="Resource_q1nwo"]
+script = ExtResource("14_mwg51")
+law = &"monarchic_gov"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_fef4f"]
+script = ExtResource("27_sfw8g")
+id = &"monarchy"
+requirements = Dictionary[ExtResource("4_rlu6y"), int]({
+SubResource("Resource_q1nwo"): 100
+})
+metadata/_custom_type_script = "uid://cioecwqf83q5d"
+
+[sub_resource type="Resource" id="Resource_088d3"]
+script = ExtResource("14_mwg51")
+law = &"republican_gov"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_t6pdt"]
+script = ExtResource("27_sfw8g")
+id = &"republic"
+requirements = Dictionary[ExtResource("4_rlu6y"), int]({
+SubResource("Resource_088d3"): 100
+})
+metadata/_custom_type_script = "uid://cioecwqf83q5d"
+
+[sub_resource type="Resource" id="Resource_haski"]
+script = ExtResource("14_mwg51")
+law = &"theocratic_gov"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_4tlmv"]
+script = ExtResource("27_sfw8g")
+id = &"theocracy"
+requirements = Dictionary[ExtResource("4_rlu6y"), int]({
+SubResource("Resource_haski"): 100
+})
+metadata/_custom_type_script = "uid://cioecwqf83q5d"
+
+[sub_resource type="Resource" id="Resource_y3uvq"]
+script = ExtResource("14_mwg51")
+law = &"military_admin"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_r5c12"]
+script = ExtResource("27_sfw8g")
+id = &"republic_mil"
+requirements = Dictionary[ExtResource("4_rlu6y"), int]({
+SubResource("Resource_088d3"): 100,
+SubResource("Resource_y3uvq"): 50
+})
+metadata/_custom_type_script = "uid://cioecwqf83q5d"
+
+[sub_resource type="Resource" id="Resource_600yj"]
+script = ExtResource("14_mwg51")
+law = &"monarchic_admin"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_lpyxo"]
+script = ExtResource("27_sfw8g")
+id = &"republic_ari"
+requirements = Dictionary[ExtResource("4_rlu6y"), int]({
+SubResource("Resource_088d3"): 100,
+SubResource("Resource_600yj"): 50
+})
+metadata/_custom_type_script = "uid://cioecwqf83q5d"
+
+[sub_resource type="Resource" id="Resource_my708"]
+script = ExtResource("14_mwg51")
+law = &"theocratic_admin"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_hgs4h"]
+script = ExtResource("27_sfw8g")
+id = &"monarchy_theo"
+requirements = Dictionary[ExtResource("4_rlu6y"), int]({
+SubResource("Resource_q1nwo"): 100,
+SubResource("Resource_my708"): 50
+})
+metadata/_custom_type_script = "uid://cioecwqf83q5d"
+
+[sub_resource type="Resource" id="Resource_lctps"]
+script = ExtResource("14_mwg51")
+law = &"military_admin"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_h8fat"]
+script = ExtResource("27_sfw8g")
+id = &"theocracy_mil"
+requirements = Dictionary[ExtResource("4_rlu6y"), int]({
+SubResource("Resource_haski"): 100,
+SubResource("Resource_lctps"): 50
+})
+metadata/_custom_type_script = "uid://cioecwqf83q5d"
+
+[sub_resource type="Resource" id="Resource_fg2qk"]
+script = ExtResource("14_mwg51")
+law = &"monarchic_gov"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_rfcfy"]
+script = ExtResource("14_mwg51")
+law = &"autocracy"
+metadata/_custom_type_script = "uid://dxi1k4tjvuvgw"
+
+[sub_resource type="Resource" id="Resource_obbu7"]
+script = ExtResource("27_sfw8g")
+id = &"monarchy_abs"
+requirements = Dictionary[ExtResource("4_rlu6y"), int]({
+SubResource("Resource_fg2qk"): 100,
+SubResource("Resource_rfcfy"): 50
+})
+metadata/_custom_type_script = "uid://cioecwqf83q5d"
+
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_aewma"]
 fractal_gain = 0.635
 
@@ -515,6 +851,7 @@ techs = Dictionary[StringName, ExtResource("3_yschh")]({
 &"mining": SubResource("Resource_m4rt3"),
 &"monarchy": SubResource("Resource_8qwew"),
 &"oreligion": SubResource("Resource_6sa6c"),
+&"republic": SubResource("Resource_jc1es"),
 &"tool": SubResource("Resource_v257o"),
 &"writing": SubResource("Resource_u14jd")
 })
@@ -539,6 +876,19 @@ goods = Dictionary[StringName, ExtResource("17_ijdv0")]({
 &"tools": SubResource("Resource_rmlkd"),
 &"wood": SubResource("Resource_8vo38")
 })
+laws = Dictionary[StringName, ExtResource("22_x5hde")]({
+&"autocracy": SubResource("Resource_dutxg"),
+&"informal_admin": SubResource("Resource_a8b8t"),
+&"informal_gov": SubResource("Resource_a5b7m"),
+&"military_admin": SubResource("Resource_dc54x"),
+&"monarchic_admin": SubResource("Resource_51o1b"),
+&"monarchic_gov": SubResource("Resource_dh5gg"),
+&"republican_gov": SubResource("Resource_6deqs"),
+&"theocratic_admin": SubResource("Resource_kx5t4"),
+&"theocratic_gov": SubResource("Resource_2n8kg")
+})
+law_categories = Array[StringName]([&"core", &"power"])
+gov_types = Array[ExtResource("27_sfw8g")]([SubResource("Resource_fef4f"), SubResource("Resource_t6pdt"), SubResource("Resource_4tlmv"), SubResource("Resource_r5c12"), SubResource("Resource_lpyxo"), SubResource("Resource_hgs4h"), SubResource("Resource_h8fat"), SubResource("Resource_obbu7")])
 base_noise = Dictionary[StringName, FastNoiseLite]({
 &"base": SubResource("FastNoiseLite_aewma"),
 &"type2": SubResource("FastNoiseLite_pisro")
@@ -584,6 +934,9 @@ offset_left = -14.0
 offset_bottom = 31.0
 grow_horizontal = 0
 alignment = 2
+
+[node name="LawDetail" type="OptionButton" parent="HBoxContainer"]
+layout_mode = 2
 
 [node name="GoodDetail" type="OptionButton" parent="HBoxContainer"]
 layout_mode = 2
@@ -654,6 +1007,7 @@ script = ExtResource("24_simij")
 to_localize = Array[ExtResource("25_xgmct")]([SubResource("Resource_hjsae"), SubResource("Resource_6sfye"), SubResource("Resource_x5hde"), SubResource("Resource_aipfm")])
 metadata/_custom_type_script = "uid://bsqomyqq8o3i1"
 
+[connection signal="item_selected" from="HBoxContainer/LawDetail" to="." method="_on_law_detail_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/GoodDetail" to="." method="_on_good_detail_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/GoodDetail2" to="." method="_on_good_detail_2_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/ScienceDetail" to="." method="_on_science_detail_item_selected"]

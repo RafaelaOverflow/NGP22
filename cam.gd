@@ -14,8 +14,10 @@ func do(delta):
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if Input.is_action_pressed("capture") else Input.MOUSE_MODE_VISIBLE
 	if Input.is_action_just_pressed("switch_focus"):
 		if focus.get_ref() == null or camera_mode == 0:
+			var i = Global.tree.get_first_node_in_group("celestial_body")
+			if i == null: return
 			camera_mode = 1
-			focus = weakref(Global.tree.get_first_node_in_group("celestial_body"))
+			focus = weakref(i)
 			var n = focus.get_ref().get_node("CameraHolder").get_child(0)
 			n.position.z = 5.0
 		else:
@@ -104,6 +106,11 @@ func do_physics(delta):
 									label.text = "%.2f" % tile.produce.get(Global.map_detail[1],0)
 								2:
 									label.text = "$%.2f" % tile.good_prices.get(Global.map_detail[1],Global.goods[Global.map_detail[1]].base_price*0.2)
+					11:
+						if Global.map_detail is StringName:
+							if tile.polity != null:
+								var pol = tile.get_polity()
+								label.text = "%s" % Global.localize("law.%s" % pol.laws[Global.map_detail])
 				if Input.is_action_just_pressed("click"):
 					Global.display_tile_info(tile,col)
 					match Global.map_mode:

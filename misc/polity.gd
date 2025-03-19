@@ -5,6 +5,25 @@ var id : int = 0
 var color : Color
 var capital : PlanetTile
 var territories : Array[PlanetTile] = []
+var laws : Dictionary[StringName,StringName] = {&"core" : &"informal_gov",&"power":&"informal_admin"}
+func set_law(law_id:StringName) -> void:
+	var law = Global.laws[law_id]
+	if laws[law.category] == law_id: return
+	Event.tile_events(law.on_set,capital)
+	laws[law.category] = law_id
+	update_gov_type()
+var gov_type : StringName = &"default"
+func update_gov_type() -> void:
+	var g = &"default"
+	var m = 0
+	for gov : GovernmentType in Global.gov_types:
+		var p = 0
+		for r in gov.requirements.keys():
+			if Requirement._polity_check(r,self): p+=gov.requirements[r]
+		if p > m:
+			m = p
+			g = gov.id
+	gov_type = g
 
 func _init(tile:PlanetTile) -> void:
 	if tile == null: return
@@ -73,6 +92,7 @@ func get_save_data() -> Dictionary:
 	s.id = id
 	s.color = color
 	s.capital = Util.vec3w(capital.id,capital.get_planet().pid)
+	s.laws = laws
 	s.territories = []
 	for tile in territories:
 		s.territories.append(Util.vec3w(tile.id,tile.get_planet().pid))
@@ -83,8 +103,10 @@ static func from_save_data(s) -> Polity:
 	p.id = s.id
 	p.color = s.color
 	p.capital = Global.get_tile(s.capital)
+	p.laws = s.laws
 	for tile in s.territories:
 		p.territories.append(Global.get_tile(tile))
+	p.update_gov_type()
 	return p
 
 class Name:

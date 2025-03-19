@@ -70,3 +70,9 @@ func _on_good_button_pressed() -> void:
 	Global.map_mode = 10
 	Global.map_detail = [Global.good_detail.selected,Global.goods.keys()[Global.good_detail_2.selected]]
 	hide()
+
+
+func _on_law_button_pressed() -> void:
+	Global.map_mode = 11
+	Global.map_detail = Global.law_categories[Global.law_detail.selected]
+	hide()
