@@ -76,3 +76,8 @@ func _on_law_button_pressed() -> void:
 	Global.map_mode = 11
 	Global.map_detail = Global.law_categories[Global.law_detail.selected]
 	hide()
+
+
+func _on_region_button_pressed() -> void:
+	Global.map_mode = 12
+	hide()

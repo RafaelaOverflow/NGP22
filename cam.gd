@@ -111,6 +111,8 @@ func do_physics(delta):
 							if tile.polity != null:
 								var pol = tile.get_polity()
 								label.text = "%s" % Global.localize("law.%s" % pol.laws[Global.map_detail])
+					12:
+						label.text = "Region ID: %s" % tile.region
 				if Input.is_action_just_pressed("click"):
 					Global.display_tile_info(tile,col)
 					match Global.map_mode:

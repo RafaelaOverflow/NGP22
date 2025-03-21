@@ -86,6 +86,9 @@ var settings = {
 }
 
 func _ready() -> void:
+	var text = {"t" : 2, "w" : 5}
+	text.keys().erase("t")
+	print(text)
 	tree = get_tree()
 	for tech in techs.keys():
 		science_detail.add_item(tech)

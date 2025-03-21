@@ -95,7 +95,7 @@ func update_goods(data : PlanetData = get_data()):
 func get_available_land(data:PlanetData = get_data()) -> float:
 	return data.area_per_tile - get_modifier(LAND_USE)
 var good_prices : Dictionary[StringName,float] = {}
-func update_good_prices():
+func update_good_prices() -> void:
 	var ngood_prices : Dictionary[StringName,float] = {}
 	for key : StringName in Global.goods.keys():
 		var g = Global.goods[key]
@@ -106,6 +106,11 @@ func update_good_prices():
 		var p = produce.get(key,0)
 		ngood_prices[key] = g.base_price*(2.0-clamp(p/c,0.2,1.8))
 	good_prices = ngood_prices
+var region = 0
+func get_region(data:PlanetData = get_data()) -> PlanetRegion:
+	return data.regions[region]
+func is_border(data:PlanetData = get_data()) -> bool:
+	return self in get_region(data).border_tiles
 
 
 func _init() -> void:
@@ -196,6 +201,14 @@ func get_color(data:PlanetData = get_data()) -> Color:
 			if !Global.map_detail is StringName or polity == null: return Color.BLACK
 			var p = get_polity()
 			return Global.laws[p.laws[Global.map_detail]].map_color
+		12:
+			var r = get_region(data)
+			if is_ocean(data):
+				if self in r.border_tiles: return Color.BLUE
+				return Color.DARK_BLUE
+			else:
+				if self in r.border_tiles: return Color.GREEN
+				return Color.DARK_GREEN
 	return Color.WHITE
 
 func get_neighbours_pos(data:PlanetData = get_data()) -> Array[Vector3i]:
@@ -304,6 +317,7 @@ func update(t,planet : Planet = get_planet(),data : PlanetData = get_data()):
 	var pc = get_pop_capacity(data)
 	if tp > data.nmax_pop: data.nmax_pop = tp
 	data.npop += tp
+	get_region(data).npop += tp
 	for pop in pops:
 		pop.update(t,planet,data,self,tp,pc)
 	if pops.size()>1:

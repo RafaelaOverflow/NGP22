@@ -125,6 +125,10 @@ layout_mode = 2
 icon = ExtResource("13_sl64r")
 expand_icon = true
 
+[node name="RegionButton" type="Button" parent="PanelContainer/ScrollContainer/HFlowContainer"]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/NormalButton" to="." method="_on_normal_button_pressed"]
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/AltitudeButton" to="." method="_on_altitude_button_pressed"]
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/TemperatureButton" to="." method="_on_temperature_button_pressed"]
@@ -138,3 +142,4 @@ expand_icon = true
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/LandUseButton" to="." method="_on_land_use_button_pressed"]
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/GoodButton" to="." method="_on_good_button_pressed"]
 [connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/LawButton" to="." method="_on_law_button_pressed"]
+[connection signal="pressed" from="PanelContainer/ScrollContainer/HFlowContainer/RegionButton" to="." method="_on_region_button_pressed"]

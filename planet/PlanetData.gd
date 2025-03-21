@@ -12,6 +12,7 @@ func get_side(normal):
 @export var atmosphere = 1.0
 var area = 0.0
 var tiles : Dictionary[Vector3i,PlanetTile] = {}
+var regions : Array[PlanetRegion] = []
 var area_per_tile = 1
 var generating_tiles = false
 var max_pop = 1
@@ -61,10 +62,39 @@ func gen_tiles(planet:Planet):
 	for good in Global.goods.keys():
 		max_consume[good] = 0
 		max_produce[good] = 0
+	gen_regions()
+
+func gen_regions():
+	regions = []
+	var unregioned = tiles.keys()
+	var i = 0
+	while true:
+		var r = PlanetRegion.new()
+		regions.append(r)
+		var t = tiles[unregioned[0]]
+		r.is_ocean = t.is_ocean(self)
+		gen_region(i,r,t,unregioned)
+		if unregioned.size() == 0:
+			break
+		i+=1
+
+func gen_region(i:int,region : PlanetRegion, tile : PlanetTile, unregioned : Array):
+	unregioned.erase(tile.id)
+	tile.region = i
+	region.tiles.append(tile)
+	var b = false
+	for n in tile.get_neighbours(self):
+		if n.is_ocean(self) == region.is_ocean:
+			if n.id in unregioned:
+				gen_region(i,region,n,unregioned)
+		else: b = true
+	if b: region.border_tiles.append(tile)
 
 func update(t,planet):
 	nmax_pop = 1
 	npop = 0
+	for r in regions:
+		r.npop = 0
 	for good in Global.goods.keys():
 		nmax_consume[good] = 0
 		nmax_produce[good] = 0
@@ -74,6 +104,8 @@ func update(t,planet):
 	pop = npop
 	max_consume = nmax_consume
 	max_produce = nmax_produce
+	for r in regions:
+		r.pop = r.npop
 
 func get_texture(normal) -> ImageTexture:
 	var img = Image.create(texture_resolution,texture_resolution,false,Image.FORMAT_RGB8)

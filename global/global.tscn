@@ -564,6 +564,16 @@ base_price = 10.0
 texture = ExtResource("21_6sfye")
 metadata/_custom_type_script = "uid://mhao8ir6uof2"
 
+[sub_resource type="Resource" id="Resource_dutxg"]
+script = ExtResource("22_x5hde")
+id = &"autocracy"
+category = &"power"
+map_color = Color(1, 1, 0, 1)
+requirements = Array[ExtResource("4_rlu6y")]([])
+modifiers = Array[ExtResource("8_v3gnm")]([])
+on_set = Array[ExtResource("4_dk7jd")]([])
+metadata/_custom_type_script = "uid://b52m62ukksvue"
+
 [sub_resource type="Resource" id="Resource_a8b8t"]
 script = ExtResource("22_x5hde")
 id = &"informal_admin"
@@ -670,16 +680,6 @@ id = &"theocratic_gov"
 category = &"core"
 map_color = Color(1, 1, 1, 1)
 requirements = Array[ExtResource("4_rlu6y")]([SubResource("Resource_x61go")])
-modifiers = Array[ExtResource("8_v3gnm")]([])
-on_set = Array[ExtResource("4_dk7jd")]([])
-metadata/_custom_type_script = "uid://b52m62ukksvue"
-
-[sub_resource type="Resource" id="Resource_dutxg"]
-script = ExtResource("22_x5hde")
-id = &"autocracy"
-category = &"power"
-map_color = Color(1, 1, 0, 1)
-requirements = Array[ExtResource("4_rlu6y")]([])
 modifiers = Array[ExtResource("8_v3gnm")]([])
 on_set = Array[ExtResource("4_dk7jd")]([])
 metadata/_custom_type_script = "uid://b52m62ukksvue"
