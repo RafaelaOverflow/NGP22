@@ -68,10 +68,8 @@ func _on_load_file_dialog_file_selected(path: String) -> void:
 
 
 func _on_host_button_pressed() -> void:
-	Global.peer.create_server(25555)
-	multiplayer.multiplayer_peer = Global.peer
+	Global.host_menu.show()
 
 
 func _on_join_button_pressed() -> void:
-	Global.peer.create_client("localhost",25555)
-	multiplayer.multiplayer_peer = Global.peer
+	Global.join_menu.show()

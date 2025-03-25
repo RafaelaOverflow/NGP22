@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxwlhikkscwsy"]
+
+[ext_resource type="Script" uid="uid://pjy4do4khcpb" path="res://ui/join_menu.gd" id="1_0dgn2"]
+[ext_resource type="Script" uid="uid://bsqomyqq8o3i1" path="res://misc/localizer.gd" id="2_lbipl"]
+
+[node name="JoinMenu" type="PanelContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_type_variation = &"PanelContainer2"
+script = ExtResource("1_0dgn2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer"]
+layout_mode = 2
+text = "localhost"
+
+[node name="SpinBox" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 10000.0
+value = 2555.0
+
+[node name="SpinBox2" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 10000.0
+value = 2556.0
+
+[node name="SpinBox3" type="SpinBox" parent="VBoxContainer"]
+layout_mode = 2
+max_value = 10000.0
+value = 2557.0
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="Localizer" type="Node" parent="."]
+script = ExtResource("2_lbipl")
+metadata/_custom_type_script = "uid://bsqomyqq8o3i1"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_button_pressed"]

@@ -61,4 +61,4 @@ func _on_tech_button_pressed() -> void:
 
 
 func _on_pop_display_button_pressed() -> void:
-	Global.pop_display.display(tile_ref.get_ref().pops)
+	Global.pop_display.display(tile_ref.get_ref())

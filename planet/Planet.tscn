@@ -1,18 +1,9 @@
-[gd_scene load_steps=10 format=4 uid="uid://bf436t4qtupcy"]
+[gd_scene load_steps=8 format=4 uid="uid://bf436t4qtupcy"]
 
 [ext_resource type="Script" uid="uid://cri53udfcd5i2" path="res://planet/planet.gd" id="1_e45ly"]
 [ext_resource type="PackedScene" uid="uid://c5t6y2yfm0wke" path="res://planet/planet_face.tscn" id="2_2uko1"]
-[ext_resource type="Script" uid="uid://dhxwv0u2xlpho" path="res://planet/PlanetData.gd" id="2_k8fu0"]
 [ext_resource type="Shader" uid="uid://b10ojih615yob" path="res://planet/atmosphere.gdshader" id="4_hhqvx"]
 [ext_resource type="Script" uid="uid://hyqn4c40eg6u" path="res://addons/icosphere/IcosphereMesh.gd" id="4_v7cku"]
-
-[sub_resource type="Resource" id="Resource_82o4e"]
-script = ExtResource("2_k8fu0")
-radius = 5000.0
-mesh_resolution = 8
-texture_resolution = 8
-ocean_level = 0.5
-atmosphere = 1.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_vn1r6"]
 radius = 1.0
@@ -43,7 +34,6 @@ metadata/_custom_type_script = "uid://hyqn4c40eg6u"
 
 [node name="Planet" type="CharacterBody3D"]
 script = ExtResource("1_e45ly")
-data = SubResource("Resource_82o4e")
 
 [node name="PlanetFace" parent="." instance=ExtResource("2_2uko1")]
 

@@ -73,6 +73,42 @@ static func delta_load_dict(base : Dictionary, delta : Dictionary,D_NAME = "") -
 	
 	return base
 
+static func delta_save_dict(base : Dictionary, other : Dictionary, save_minus = false, D_NAME = ""):
+	var delta = {}
+	for key in other.keys():
+		if base.has(key):
+			if typeof(base[key]) == typeof(other[key]):
+				if typeof(base[key]) == TYPE_DICTIONARY:
+					var d = delta_save_dict(base[key],other[key],save_minus,key)
+					if !d.is_empty():
+						delta[key] = d
+				elif typeof(base[key]) == TYPE_ARRAY:
+					if base[key] == other[key]:
+						pass
+					elif base[key].size() == other[key].size():
+						var r = false
+						for i in base[key].size():
+							if typeof(base[key][i]) != typeof(other[key][i]) or base[key][i] != other[key][i]:
+								delta[key] = other[key]
+								break
+					else:
+						delta[key] = other[key]
+				else:
+					if base[key] != other[key]:
+						delta[key] = other[key]
+			else:
+				delta[key] = other[key]
+			base.erase(key)
+		else:
+			delta[key] = other[key]
+	if save_minus:
+		var minus = []
+		for key in base.keys():
+			minus.append(key)
+		if minus.size() > 0: delta["!MINUS!"] = minus
+	
+	return delta
+
 static func vec4i_xyz(vec4 : Vector4i) -> Vector3i:
 	return Vector3i(vec4.x,vec4.y,vec4.z)
 

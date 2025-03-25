@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 Global="*res://global/global.tscn"
 
+[debug]
+
+settings/gdscript/max_call_stack=2047
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/easy_charts/plugin.cfg", "res://addons/icosphere/plugin.cfg")
@@ -158,3 +162,7 @@ timedown={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":44,"key_label":0,"unicode":44,"location":0,"echo":false,"script":null)
 ]
 }
+
+[network]
+
+limits/packet_peer_stream/max_buffer_po2=64

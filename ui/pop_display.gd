@@ -8,17 +8,20 @@ enum MODE {
 @onready var chart: Chart = $Tab/PopGraph/HFlowContainer/Chart
 @onready var label: Label = $Tab/POPs/VBoxContainer/Label
 
-var pops
+var pop_holder_ref : WeakRef = weakref(null)
 var mode = MODE.JOB
 
-func display(_pops : Array[POP]):
-	pops = _pops
+func display(_pop_holder):
+	pop_holder_ref = weakref(_pop_holder)
 	show()
 	update()
 
 func _process(delta: float) -> void:
 	if visible:
 		label.text = ""
+		var pop_holder = pop_holder_ref.get_ref()
+		if pop_holder == null: return
+		var pops = pop_holder.pops
 		match mode:
 			MODE.JOB:
 				for i in 15:
@@ -27,14 +30,13 @@ func _process(delta: float) -> void:
 					label.text += "\n%s" % pop.get_save_data()
 					f1.__x[pop.job] += pop.size
 		chart.queue_redraw()
-	else:
-		pops = null
 
 var f1 : Function
 
 func update():
-	#var pops = pops_ref.get_ref()
-	if pops == null: return
+	var pop_holder = pop_holder_ref.get_ref()
+	if pop_holder == null: return
+	var pops = pop_holder.pops
 	var x = []
 	var y = []
 	match mode:

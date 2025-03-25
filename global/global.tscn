@@ -1,4 +1,4 @@
-[gd_scene load_steps=158 format=3 uid="uid://cd5apumrfml4m"]
+[gd_scene load_steps=161 format=3 uid="uid://cd5apumrfml4m"]
 
 [ext_resource type="Script" uid="uid://m2u71yjbpcqg" path="res://global/global.gd" id="1_jlmgm"]
 [ext_resource type="Shader" uid="uid://d34an60rewr2v" path="res://global/planet.gdshader" id="2_84sqh"]
@@ -45,6 +45,8 @@
 [ext_resource type="Script" uid="uid://bsqomyqq8o3i1" path="res://misc/localizer.gd" id="24_simij"]
 [ext_resource type="Script" uid="uid://cl2yut0pnkpl" path="res://misc/localizer_target.gd" id="25_xgmct"]
 [ext_resource type="Script" uid="uid://cioecwqf83q5d" path="res://misc/government_type.gd" id="27_sfw8g"]
+[ext_resource type="PackedScene" uid="uid://c1021hg4v5xlo" path="res://ui/host_menu.tscn" id="46_hphlv"]
+[ext_resource type="PackedScene" uid="uid://bxwlhikkscwsy" path="res://ui/join_menu.tscn" id="47_6vyew"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xqlvv"]
 render_priority = 0
@@ -837,6 +839,17 @@ var_id = &"tooltip_text"
 loc_id = "global.button.main_menu"
 metadata/_custom_type_script = "uid://cl2yut0pnkpl"
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_sfw8g"]
+properties/0/path = NodePath(".:time_scale")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("TimeThing:speed")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("TimeThing:last")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
 [node name="Global" type="Node"]
 script = ExtResource("1_jlmgm")
 base_planet_mat = SubResource("ShaderMaterial_xqlvv")
@@ -974,7 +987,6 @@ layout_mode = 2
 icon = ExtResource("7_pisro")
 
 [node name="Label" type="Label" parent="."]
-visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -1007,6 +1019,20 @@ script = ExtResource("24_simij")
 to_localize = Array[ExtResource("25_xgmct")]([SubResource("Resource_hjsae"), SubResource("Resource_6sfye"), SubResource("Resource_x5hde"), SubResource("Resource_aipfm")])
 metadata/_custom_type_script = "uid://bsqomyqq8o3i1"
 
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+spawn_path = NodePath("../SolarSystem")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_sfw8g")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="HostMenu" parent="." instance=ExtResource("46_hphlv")]
+visible = false
+
+[node name="JoinMenu" parent="." instance=ExtResource("47_6vyew")]
+visible = false
+
 [connection signal="item_selected" from="HBoxContainer/LawDetail" to="." method="_on_law_detail_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/GoodDetail" to="." method="_on_good_detail_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/GoodDetail2" to="." method="_on_good_detail_2_item_selected"]
@@ -1015,3 +1041,5 @@ metadata/_custom_type_script = "uid://bsqomyqq8o3i1"
 [connection signal="toggled" from="HBoxContainer/RotateWithPlanetButton" to="." method="_on_rotate_with_planet_button_toggled"]
 [connection signal="toggled" from="HBoxContainer/AtmosphereButton" to="." method="_on_atmosphere_button_toggled"]
 [connection signal="pressed" from="HBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="synchronized" from="MultiplayerSynchronizer" to="." method="_on_multiplayer_synchronizer_synchronized"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]

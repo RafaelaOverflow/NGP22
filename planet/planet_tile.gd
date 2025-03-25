@@ -363,11 +363,17 @@ func update(t,planet : Planet = get_planet(),data : PlanetData = get_data()):
 	if !is_ocean():
 		update_goods(data)
 
+func sync_update(planet,data):
+	var tp = get_total_pop()
+	if tp > data.nmax_pop: data.nmax_pop = tp
+	data.npop += tp
+	if !is_ocean():
+		update_goods(data)
 
 func is_ocean(data:PlanetData = get_data()):
 	return height < data.ocean_level
 
-func get_save_data() -> Dictionary:
+func get_save_data(sync=false) -> Dictionary:
 	var s = {}
 	s.height = height
 	s.humidity = humidity
@@ -408,3 +414,19 @@ static func from_save_data(s, planet : Planet, data : PlanetData) -> PlanetTile:
 	t.update_modifiers()
 	t.update_goods(data)
 	return t
+
+func sync(s):
+	height = s.height
+	humidity = s.humidity
+	cold = s.cold
+	forest = s.forest
+	for b in s.buildings:
+		buildings[b.type] = Building.from_save_data(b)
+	var npops : Array[POP] = []
+	for pop in s.pops:
+		npops.append(POP.from_save_data(pop,self))
+	pops = npops
+	polity = s.polity
+	tech_points = s.tech_points
+	build_points = s.build_points
+	techs = s.techs

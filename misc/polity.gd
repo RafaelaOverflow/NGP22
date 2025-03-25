@@ -98,6 +98,16 @@ func get_save_data() -> Dictionary:
 		s.territories.append(Util.vec3w(tile.id,tile.get_planet().pid))
 	return s
 
+func sync(s):
+	color = s.color
+	capital = Global.get_tile(s.capital)
+	laws = s.laws
+	var nt : Array[PlanetTile] = []
+	for tile in s.territories:
+		nt.append(Global.get_tile(tile))
+	territories = nt
+	update_gov_type()
+
 static func from_save_data(s) -> Polity:
 	var p = Polity.new(null)
 	p.id = s.id

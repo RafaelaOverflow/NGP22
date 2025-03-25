@@ -62,7 +62,7 @@ func _process(delta: float) -> void:
 
 
 func _on_pop_button_pressed() -> void:
-	Global.pop_display.display(b_ref.get_ref().pops)
+	Global.pop_display.display(b_ref.get_ref())
 
 func consume_button(button):
 	var i = consume.find(button)

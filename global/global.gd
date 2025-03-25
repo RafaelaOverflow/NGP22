@@ -1,6 +1,9 @@
 extends Node
 
-#var peer := ENetMultiplayerPeer.new()
+var server := GameServer.new()
+var client := GameClient.new()
+
+var is_host = true
 
 @export var base_planet_mat : Material
 
@@ -16,7 +19,7 @@ var tree : SceneTree
 
 var atmosphere_visible := true
 var rotate_with_planet := false
-var map_mode = 0
+@export var map_mode = 0
 var map_detail = null
 var t :int= 0
 var t_progress :float= 0.0
@@ -37,6 +40,8 @@ var polities : Dictionary[int,Polity] = {}
 @onready var building_display: Control = $BuildingDisplay
 @onready var tech_tree: Control = $TechTree
 @onready var pop_display: Control = $PopDisplay
+@onready var host_menu: PanelContainer = $HostMenu
+@onready var join_menu: PanelContainer = $JoinMenu
 
 @onready var science_detail: OptionButton = $HBoxContainer/ScienceDetail
 @onready var good_detail: OptionButton = $HBoxContainer/GoodDetail
@@ -82,13 +87,11 @@ signal localization_update
 const settings_path = "user://settings.txt"
 var settings = {
 	"localization" : "english",
-	"theme" : &"default"
+	"theme" : &"default",
+	"disable_light_time_scale" : 5.0
 }
 
 func _ready() -> void:
-	var text = {"t" : 2, "w" : 5}
-	text.keys().erase("t")
-	print(text)
 	tree = get_tree()
 	for tech in techs.keys():
 		science_detail.add_item(tech)
@@ -159,7 +162,12 @@ func update_settings():
 func modify_noise_range(n,min = 0,max = 1):
 	return (((n/2.0)+1) * (max-min))+min
 
+var buffer_s = []
+var sync_buffer : PackedByteArray = []
+@export var sync : Array
+
 var lts = 0
+var f = 0
 func _process(delta: float) -> void:
 	science_detail.visible = map_mode == 8
 	good_detail.visible = map_mode == 10
@@ -176,15 +184,16 @@ func _process(delta: float) -> void:
 		t_progress -= float(x*1.0)
 		t = posmod(t+x,t_limit)
 	var cam = tree.get_first_node_in_group("camera")
-	if cam != null:
-		if cam.camera_mode == 1:
-			if cam.focus.get_ref() != null:
-				var n : CelestialBody = cam.focus.get_ref()
-				if n is Planet:
-					$Label.text = "%s - %s" % [n.p,t]
+	
+	if is_host:
+		server.update()
+	else:
+		client.update()
+	if time_scale >= settings.disable_light_time_scale:
+		_on_light_button_toggled(false)
 	if Input.is_action_just_pressed("leave") and cam.camera_mode != 1:
 		$MainMenu.show()
-	
+	f+=1
 
 func display_tile_info(tile : PlanetTile,planet):
 	$TileInfoDisplay.display(tile,planet)
@@ -298,3 +307,11 @@ func _on_good_detail_2_item_selected(index: int) -> void:
 
 func _on_law_detail_item_selected(index: int) -> void:
 	map_detail = law_categories[index]
+
+
+func _on_multiplayer_synchronizer_synchronized() -> void:
+	pass
+
+
+func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	pass # Replace with function body.

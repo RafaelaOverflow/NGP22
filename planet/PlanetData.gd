@@ -107,6 +107,23 @@ func update(t,planet):
 	for r in regions:
 		r.pop = r.npop
 
+func sync_update(planet):
+	nmax_pop = 1
+	npop = 0
+	for r in regions:
+		r.npop = 0
+	for good in Global.goods.keys():
+		nmax_consume[good] = 0
+		nmax_produce[good] = 0
+	for tile : PlanetTile in tiles.values():
+		tile.sync_update(planet,self)
+	max_pop = nmax_pop
+	pop = npop
+	max_consume = nmax_consume
+	max_produce = nmax_produce
+	for r in regions:
+		r.pop = r.npop
+
 func get_texture(normal) -> ImageTexture:
 	var img = Image.create(texture_resolution,texture_resolution,false,Image.FORMAT_RGB8)
 	var axisA := Vector3(normal.y, normal.z, normal.x)
@@ -122,7 +139,7 @@ func get_material(normal) -> Material:
 	mat.set_shader_parameter("tex",tex)
 	return mat
 
-func get_save_data() -> Dictionary:
+func get_save_data(sync=false) -> Dictionary:
 	var s = {}
 	s.radius = radius
 	s.mesh_resolution = mesh_resolution
@@ -131,7 +148,7 @@ func get_save_data() -> Dictionary:
 	s.atmosphere = atmosphere
 	s.tiles = []
 	for tile : PlanetTile in tiles.values():
-		s.tiles.append(tile.get_save_data())
+		s.tiles.append(tile.get_save_data(sync))
 	return s
 
 static func from_save_data(s, planet : Planet) -> PlanetData:
@@ -143,6 +160,16 @@ static func from_save_data(s, planet : Planet) -> PlanetData:
 	d.area_per_tile = (d.area/(d.texture_resolution*d.texture_resolution*6))
 	d.ocean_level = s.ocean_level
 	d.atmosphere = s.atmosphere
+	for good in Global.goods.keys():
+		d.nmax_consume[good] = 0
+		d.nmax_produce[good] = 0
 	for tile in s.tiles:
 		d.tiles[tile.id] = PlanetTile.from_save_data(tile,planet,d)
+	d.gen_regions()
 	return d
+
+func sync(s,planet:Planet):
+	ocean_level = s.ocean_level
+	atmosphere = s.atmosphere
+	for tile in s.tiles:
+		tiles[tile.id].sync(tile)

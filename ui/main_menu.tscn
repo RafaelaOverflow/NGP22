@@ -58,12 +58,12 @@ layout_mode = 2
 text = "Continue"
 
 [node name="HostButton" type="Button" parent="VBoxContainer"]
-visible = false
 layout_mode = 2
+text = "Host"
 
 [node name="JoinButton" type="Button" parent="VBoxContainer"]
-visible = false
 layout_mode = 2
+text = "Join"
 
 [node name="SaveButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2

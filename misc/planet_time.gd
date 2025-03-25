@@ -26,3 +26,8 @@ static func from_save_data(s) -> PlanetTime:
 	pt.yd = s.yd
 	pt.y = s.y
 	return pt
+
+func sync(s) -> void:
+	yp = s.yp
+	yd = s.yd
+	y = s.y
