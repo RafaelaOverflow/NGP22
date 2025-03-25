@@ -1,7 +1,7 @@
 extends RefCounted
 class_name GameClient
 
-var id = ""
+var id : int = 0
 var peer := ENetMultiplayerPeer.new()
 var message = {}
 var tcp_messanger = StreamPeerTCP.new()
@@ -10,6 +10,7 @@ var sync = {}
 var sync_buffer : PackedByteArray = []
 var tcp_sync = StreamPeerTCP.new()
 var sync_connected := false
+var actions = []
 
 func create(ip,port_mu,port_m,port_s):
 	peer.create_client(ip,port_mu)
@@ -45,29 +46,33 @@ func update():
 		else:
 			if !sync_buffer.is_empty():
 				var v2 = sync_buffer.decompress(message.sync_size,FileAccess.COMPRESSION_FASTLZ)
-				var v = bytes_to_var(v2)
-				if v is Dictionary:
-					Util.delta_load_dict(sync,v)
-					if Global.tree.get_nodes_in_group("planet").size() < sync.size():
-						Global.clean_solar_system()
-						var star = preload("res://star/star.tscn").instantiate()
-						star.scale = Vector3(139.268,139.268,139.268)
-						Global.solar_system.add_child.call_deferred(star)
-						for s in sync.p.values():
-							var p = Planet.from_save_data(s)
-							p.orbit_around = star
-							Global.solar_system.add_child(p)
-					for p in sync.pol.keys():
-						if Global.polities.has(p):
-							Global.polities[p].sync(sync.pol[p])
-						else:
-							Global.polities[p] = Polity.from_save_data(sync.pol[p])
-					for key in Global.polities.keys():
-						if !sync.pol.has(key): Global.polities.erase(key)
+				if v2.size() > 4:
+					var v = bytes_to_var(v2)
+					if v is Dictionary:
+						Util.delta_load_dict(sync,v)
+						if Global.tree.get_nodes_in_group("planet").size() < sync.size():
+							Global.clean_solar_system()
+							var star = preload("res://star/star.tscn").instantiate()
+							star.scale = Vector3(139.268,139.268,139.268)
+							Global.solar_system.add_child.call_deferred(star)
+							for s in sync.p.values():
+								var p = Planet.from_save_data(s)
+								p.orbit_around = star
+								Global.solar_system.add_child(p)
+						for p in sync.pol.keys():
+							if Global.polities.has(p):
+								Global.polities[p].sync(sync.pol[p])
+							else:
+								Global.polities[p] = Polity.from_save_data(sync.pol[p])
+						for key in Global.polities.keys():
+							if !sync.pol.has(key): Global.polities.erase(key)
 				sync_buffer.clear()
 			f=0
 			client_state.need_sync = true
+		if actions.size() > 0:
+			client_state.act = actions
 		tcp_messanger.put_var(client_state)
+		actions.clear()
 
 func update_message():
 	if !tcp_messanger.get_available_bytes() > 0: return

@@ -108,6 +108,9 @@
 		"law_category" : {
 			"core" : "Government Spirit",
 			"power" : "Power Distribution"
+		},
+		"multiplayer" : {
+			"join_message" : "%s has joined the game!"
 		}
 	}
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=161 format=3 uid="uid://cd5apumrfml4m"]
+[gd_scene load_steps=162 format=3 uid="uid://cd5apumrfml4m"]
 
 [ext_resource type="Script" uid="uid://m2u71yjbpcqg" path="res://global/global.gd" id="1_jlmgm"]
 [ext_resource type="Shader" uid="uid://d34an60rewr2v" path="res://global/planet.gdshader" id="2_84sqh"]
@@ -47,6 +47,7 @@
 [ext_resource type="Script" uid="uid://cioecwqf83q5d" path="res://misc/government_type.gd" id="27_sfw8g"]
 [ext_resource type="PackedScene" uid="uid://c1021hg4v5xlo" path="res://ui/host_menu.tscn" id="46_hphlv"]
 [ext_resource type="PackedScene" uid="uid://bxwlhikkscwsy" path="res://ui/join_menu.tscn" id="47_6vyew"]
+[ext_resource type="PackedScene" uid="uid://cb7xhxicfyd0i" path="res://multiplayer/chat.tscn" id="48_6vyew"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xqlvv"]
 render_priority = 0
@@ -849,6 +850,9 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("TimeThing:last")
 properties/2/spawn = true
 properties/2/replication_mode = 1
+properties/3/path = NodePath(".:chat")
+properties/3/spawn = true
+properties/3/replication_mode = 1
 
 [node name="Global" type="Node"]
 script = ExtResource("1_jlmgm")
@@ -987,6 +991,7 @@ layout_mode = 2
 icon = ExtResource("7_pisro")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -1019,9 +1024,6 @@ script = ExtResource("24_simij")
 to_localize = Array[ExtResource("25_xgmct")]([SubResource("Resource_hjsae"), SubResource("Resource_6sfye"), SubResource("Resource_x5hde"), SubResource("Resource_aipfm")])
 metadata/_custom_type_script = "uid://bsqomyqq8o3i1"
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-spawn_path = NodePath("../SolarSystem")
-
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_sfw8g")
 
@@ -1032,6 +1034,8 @@ visible = false
 
 [node name="JoinMenu" parent="." instance=ExtResource("47_6vyew")]
 visible = false
+
+[node name="Chat" parent="." instance=ExtResource("48_6vyew")]
 
 [connection signal="item_selected" from="HBoxContainer/LawDetail" to="." method="_on_law_detail_item_selected"]
 [connection signal="item_selected" from="HBoxContainer/GoodDetail" to="." method="_on_good_detail_item_selected"]

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqnqsl1onmk73"]
+
+[ext_resource type="Script" uid="uid://b518lt25spj50" path="res://multiplayer/chat_message.gd" id="1_402gx"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_402gx"]
+properties/0/path = NodePath(".:text")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+
+[node name="ChatMessage" type="Label"]
+autowrap_mode = 1
+script = ExtResource("1_402gx")
+metadata/_custom_type_script = "uid://b518lt25spj50"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_402gx")

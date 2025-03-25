@@ -11,7 +11,7 @@ func _ready() -> void:
 
 func law_selected(index,law_list):
 	if polity == null: return
-	Global.polities[polity].set_law(law_list[index].id)
+	Action.queue_action(Action.create_action(Global.client.id,Action.SET_LAW,[polity,law_list[index].id]))
 
 func _process(delta: float) -> void:
 	if visible:

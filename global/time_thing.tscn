@@ -1,8 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bffgqmliomxq6"]
+[gd_scene load_steps=5 format=3 uid="uid://bffgqmliomxq6"]
 
 [ext_resource type="Texture2D" uid="uid://dgncjyhhhoifk" path="res://textures/ui/progress_bar.png" id="1_5jajh"]
 [ext_resource type="Script" uid="uid://dll0vwwb6k60b" path="res://global/time_thing.gd" id="1_twtmi"]
 [ext_resource type="Texture2D" uid="uid://c2l5nstioqnq6" path="res://textures/ui/progress_bar_full.png" id="2_qvaxs"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_twtmi"]
+properties/0/path = NodePath("TextureProgressBar:value")
+properties/0/spawn = true
+properties/0/replication_mode = 2
 
 [node name="TimeThing" type="Control"]
 layout_mode = 3
@@ -31,3 +36,6 @@ grow_vertical = 0
 max_value = 9.0
 texture_under = ExtResource("1_5jajh")
 texture_progress = ExtResource("2_qvaxs")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_twtmi")

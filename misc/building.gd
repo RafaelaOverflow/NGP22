@@ -94,3 +94,9 @@ static func from_save_data(s) -> Building:
 	var b = Building.new(s.type,s.size)
 	b.expand_progress = s.expand_progress
 	return b
+
+func sync(s) -> void:
+	type = s.type
+	size = s.size
+	expand_progress = s.expand_progress
+	pops.clear()

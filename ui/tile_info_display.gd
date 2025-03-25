@@ -36,17 +36,11 @@ func _process(delta: float) -> void:
 				pass
 
 func _on_forest_button_pressed() -> void:
-	var tile = tile_ref.get_ref()
-	tile.forest = min(1.0,0.1)
+	Action.queue_action(Action.create_action(Global.client.id,Action.ADD_FOREST,[tile_ref.get_ref().get_global_id()]))
 
 
 func _on_pop_button_pressed() -> void:
-	var planet = planet_ref.get_ref()
-	var tile = tile_ref.get_ref()
-	if planet != null and tile != null:
-		tile.pops.append(POP.new(100))
-	
-
+	Action.queue_action(Action.create_action(Global.client.id,Action.ADD_POP,[tile_ref.get_ref().get_global_id()]))
 
 func _on_polities_button_pressed() -> void:
 	Global.polities_display.display(null)

@@ -95,7 +95,7 @@ func get_save_data() -> Dictionary:
 	s.laws = laws
 	s.territories = []
 	for tile in territories:
-		s.territories.append(Util.vec3w(tile.id,tile.get_planet().pid))
+		s.territories.append(tile.get_global_id())
 	return s
 
 func sync(s):

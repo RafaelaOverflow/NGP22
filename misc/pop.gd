@@ -138,5 +138,8 @@ static func from_save_data(s : Dictionary,tile:PlanetTile) -> POP:
 	p.grow_progress = s.grow_progress
 	p.building = s.building
 	if p.building != null:
-		tile.buildings[p.building].pops.append(p)
+		if tile.buildings.has(p.building):
+			tile.buildings[p.building].pops.append(p)
+		else:
+			p.building = null
 	return p

@@ -2,6 +2,7 @@ extends Node
 
 var server := GameServer.new()
 var client := GameClient.new()
+@onready var chat: Control = $Chat
 
 var is_host = true
 

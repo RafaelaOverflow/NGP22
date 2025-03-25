@@ -9,6 +9,7 @@ var state = INCOMPLETE
 var message = {}
 var tcp_messanger : StreamPeerTCP = null
 
+var id = 0
 var sync = {}
 var tcp_sync : StreamPeerTCP = null
 
@@ -20,6 +21,7 @@ func update():
 	tcp_messanger.poll()
 	if state == INCOMPLETE:
 		state = COMPLETE
+		Global.chat.add_message(Global.localize("multiplayer.join_message") % id)
 	if tcp_messanger.get_available_bytes() > 0:
 		var m = tcp_messanger.get_var()
 		if m is Dictionary:

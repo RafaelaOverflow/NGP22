@@ -4,6 +4,7 @@ extends Control
 @export var speed = 0
 @export var last = 0
 func _process(delta: float) -> void:
+	if !Global.is_host: return
 	if Input.is_action_just_pressed("pause"):
 		if speed != 0:
 			last = speed

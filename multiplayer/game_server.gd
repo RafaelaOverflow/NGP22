@@ -8,6 +8,7 @@ var clients : Dictionary[int,GameConnection] = {}
 var to_clientize_m : Array[StreamPeerTCP]
 var to_clientize_s : Array[StreamPeerTCP]
 
+var actions = []
 var sync = {}
 
 func create(ip,port_mu,port_me,port_sy):
@@ -16,6 +17,7 @@ func create(ip,port_mu,port_me,port_sy):
 	message_server.listen(port_me)
 	sync_server.listen(port_sy)
 	Global.is_host = true
+	Global.client.id = Global.multiplayer.get_unique_id()
 
 func update():
 	if message_server.is_connection_available():
@@ -27,7 +29,9 @@ func update():
 		if p.get_status() != 2: continue
 		var v = p.get_var()
 		if v != null:
-			if !clients.has(v): clients[v] = GameConnection.new()
+			if !clients.has(v): 
+				clients[v] = GameConnection.new()
+				clients[v].id = v
 			clients[v].tcp_messanger = p
 			to_clientize_m.erase(p)
 	for p in to_clientize_s:
@@ -35,7 +39,9 @@ func update():
 		if p.get_status() != 2: continue
 		var v = p.get_var()
 		if v != null:
-			if !clients.has(v): clients[v] = GameConnection.new()
+			if !clients.has(v): 
+				clients[v] = GameConnection.new()
+				clients[v].id = v
 			clients[v].tcp_sync = p
 			to_clientize_s.erase(p)
 	var nsync = {"p":{}, "pol":{}}
@@ -47,6 +53,12 @@ func update():
 	for key : int in clients.keys():
 		var client = clients[key]
 		var i = client.update()
+		if client.message.has("act"):
+			actions.append_array(client.message.act)
+			client.message.erase("act")
 		if client.state == GameConnection.INCOMPLETE: continue
 		if i[0] and client.message.get("need_sync",false):
 			client.fsync()
+	for action in actions:
+		Action.act(action)
+	actions.clear()

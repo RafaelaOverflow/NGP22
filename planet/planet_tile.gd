@@ -28,6 +28,8 @@ func get_forestation(data = get_data()):
 	return forest*100.0
 var pos : Vector3
 var id : Vector3i
+func get_global_id(planet : Planet  = get_planet()) -> Vector4:
+	return Util.vec3w(id,planet.pid)
 var pops : Array[POP] = []
 var polity = null
 func get_polity() -> Polity:
@@ -420,8 +422,14 @@ func sync(s):
 	humidity = s.humidity
 	cold = s.cold
 	forest = s.forest
+	var bkeys = []
 	for b in s.buildings:
-		buildings[b.type] = Building.from_save_data(b)
+		bkeys.append(b.type)
+		if buildings.has(b.type): buildings[b.type].sync(b)
+		else: buildings[b.type] = Building.from_save_data(b)
+	for key in buildings.keys():
+		if !key in bkeys:
+			buildings.erase(key)
 	var npops : Array[POP] = []
 	for pop in s.pops:
 		npops.append(POP.from_save_data(pop,self))
