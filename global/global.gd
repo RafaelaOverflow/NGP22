@@ -199,6 +199,10 @@ func _process(delta: float) -> void:
 func display_tile_info(tile : PlanetTile,planet):
 	$TileInfoDisplay.display(tile,planet)
 
+func display_planet(planet:Planet):
+	$TileInfoDisplay.display(planet.data.tiles[Vector3i.ZERO],planet)
+	$TileInfoDisplay/TabContainer.current_tab = 1
+
 func hide_tile_info():
 	$TileInfoDisplay.hide()
 

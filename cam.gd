@@ -16,6 +16,8 @@ func do(delta):
 		if focus.get_ref() == null or camera_mode == 0:
 			var i = Global.tree.get_first_node_in_group("celestial_body")
 			if i == null: return
+			if i is Planet:
+				Global.display_planet(i)
 			camera_mode = 1
 			focus = weakref(i)
 			var n = focus.get_ref().get_node("CameraHolder").get_child(0)
@@ -25,6 +27,9 @@ func do(delta):
 			var f = focus.get_ref()
 			var i = cbs.find(f)
 			focus = weakref(cbs[posmod(i+1,cbs.size())])
+			i = focus.get_ref()
+			if i is Planet:
+				Global.display_planet(i)
 	if Input.is_action_just_pressed("leave"): camera_mode = 0
 	
 	match camera_mode:

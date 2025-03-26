@@ -76,6 +76,7 @@ func update():
 			sync_data = get_save_data()
 	else:
 		sync(Global.client.sync.p[pid])
+		data.sync_update(self)
 		tex_update = true
 
 func update_tex():
