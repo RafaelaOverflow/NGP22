@@ -26,6 +26,7 @@ var t :int= 0
 var t_progress :float= 0.0
 var t_limit : int = 99999999
 var polities : Dictionary[int,Polity] = {}
+@export var system_region : SystemRegion
 @export var techs : Dictionary[StringName,Tech] = {}
 @export var building_types : Dictionary[StringName,BuildingType] = {}
 @export var resource_types : Dictionary[StringName,ResourceType] = {}
@@ -170,6 +171,7 @@ var sync_buffer : PackedByteArray = []
 var lts = 0
 var f = 0
 func _process(delta: float) -> void:
+	
 	science_detail.visible = map_mode == 8
 	good_detail.visible = map_mode == 10
 	good_detail_2.visible = map_mode == 10
@@ -185,16 +187,34 @@ func _process(delta: float) -> void:
 		t_progress -= float(x*1.0)
 		t = posmod(t+x,t_limit)
 	var cam = tree.get_first_node_in_group("camera")
-	
+	if cam.using_controller or true:
+		var screen_size_factor = $Control.size.x / 500.0
+		var cv = Input.get_vector("look_left","look_right","look_up","look_down")*screen_size_factor*(100.0+200.0*(Input.get_action_strength("mouse_add_speed_l")+Input.get_action_strength("mouse_add_speed_r")))*delta
+		#print(cv)
+		if cv != Vector2.ZERO:
+			Input.warp_mouse(cv+$Control.get_global_mouse_position())
+		if Input.is_action_just_pressed("control_click"):
+			click()
 	if is_host:
 		server.update()
 	else:
 		client.update()
 	if time_scale >= settings.disable_light_time_scale:
 		_on_light_button_toggled(false)
-	if Input.is_action_just_pressed("leave") and cam.camera_mode != 1:
+	if Input.is_action_just_pressed("menu") and cam.camera_mode != 1:
 		$MainMenu.show()
+	
 	f+=1
+
+func click():
+	var event = InputEventMouseButton.new()
+	event.position = $Control.get_global_mouse_position()
+	event.button_index = MOUSE_BUTTON_LEFT
+	event.pressed = true
+	Input.parse_input_event(event)
+	await tree.process_frame
+	event.pressed = false
+	Input.parse_input_event(event)
 
 func display_tile_info(tile : PlanetTile,planet):
 	$TileInfoDisplay.display(tile,planet)
@@ -243,8 +263,10 @@ func create_solar_system(info : Dictionary) -> void:
 		var star = preload("res://star/star.tscn").instantiate()
 		star.scale = Vector3(139.268,139.268,139.268)
 		solar_system.add_child.call_deferred(star)
-		var x = 7419.0
-		for i in 4:
+		var x0 = 6530.0
+		var x = 71222.4
+		gen_temp.min_hab = 1
+		for i in info.get("planet_amount",4):
 			var nt = ["base","base","type2"]
 			for n in nt.size():
 				gen_temp["noise%s" % n] = base_noise[nt[n]].duplicate()
@@ -256,7 +278,12 @@ func create_solar_system(info : Dictionary) -> void:
 				gen_temp.rnoises.append(n)
 			var p : Planet = preload("res://planet/Planet.tscn").instantiate()
 			var pd := PlanetData.new()
-			p.cd = x
+			if gen_temp.min_hab > 0:
+				p.cd = system_region.get_sub_region_by_tag(&"habitable").get_random_position(random)
+			else:
+				p.cd = system_region.get_random_position(random)
+			var sr = system_region.get_sub_region_from_pos(p.cd)
+			pd.radius = random.randf_range(2000,8000)
 			p.orbit_around = star
 			p.data = pd
 			p.pid = i
@@ -265,8 +292,32 @@ func create_solar_system(info : Dictionary) -> void:
 			#pd.mesh_resolution = clamp(pd.texture_resolution,3,32)
 			pd.ocean_level = 0.5
 			pd.gen_tiles(p)
-			x+= 7419.0
+			if &"ring" in sr.tags:
+				p.ring_data = [random.randf_range(1.2,2.0),random.randf_range(0.5,4.0),Color(random.randf(),random.randf(),random.randf())]
 			solar_system.add_child.call_deferred(p)
+			gen_temp.min_hab -= 1
+			if info.moon_percent > 0 and random.randf() <= info.moon_percent:
+				for n in nt.size():
+					gen_temp["noise%s" % n] = base_noise[nt[n]].duplicate()
+					gen_temp["noise%s" % n].seed = random.randi()
+				gen_temp["rnoises"] = []
+				for r in resource_types.values():
+					var n = base_noise.base.duplicate()
+					n.seed = random.randi()
+					gen_temp.rnoises.append(n)
+				var m : Planet = preload("res://planet/Planet.tscn").instantiate()
+				var md := PlanetData.new()
+				md.radius = random.randf_range(500,min(8000,pd.radius*0.5))
+				m.cd = pd.radius/5000.0 + random.randf_range(70,80)
+				m.orbit_around = p
+				m.data = md
+				m.pid = i
+				md.mesh_resolution = info.get("planet_mesh_resolution",8)
+				md.texture_resolution = info.get("planet_resolution",8)
+				#pd.mesh_resolution = clamp(pd.texture_resolution,3,32)
+				md.ocean_level = 0.5
+				md.gen_tiles(m)
+				solar_system.add_child.call_deferred(m)
 		)
 
 func quit():

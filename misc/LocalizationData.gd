@@ -1,3 +1,4 @@
+#I took this class from an older project of mine, so it might contain references to things that this project doesn't have
 extends RefCounted
 class_name LocalizationData
 

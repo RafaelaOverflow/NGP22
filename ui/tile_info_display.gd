@@ -8,6 +8,7 @@ var planet_ref : WeakRef = weakref(null)
 @onready var planet_label : Label = $TabContainer/Planet/Label
 @onready var system_label : Label = $TabContainer/System/Label
 @onready var region_label: Label = $TabContainer/Region/VBoxContainer/Label
+@onready var planet_vbox : VBoxContainer = $TabContainer/Planet
 
 func display(tile,planet):
 	show()
@@ -21,6 +22,7 @@ func _process(delta: float) -> void:
 	var planet = planet_ref.get_ref()
 	var tile = tile_ref.get_ref()
 	if planet != null and tile != null:
+		planet_vbox.name = "Moon" if planet.orbit_around is Planet else "Planet"
 		match $TabContainer.current_tab:
 			3:
 				color_rect.color = tile.get_color(planet.data)

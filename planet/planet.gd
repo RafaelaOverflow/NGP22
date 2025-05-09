@@ -5,6 +5,8 @@ class_name Planet
 @export var rotate_speed : float = 6.37045
 @export var orbit_around : Node3D
 @onready var camera_holder: Node3D = $CameraHolder
+@onready var ring: MeshInstance3D = $Ring
+var ring_data := []
 
 @export var data : PlanetData = null
 @onready var faces = [$PlanetFace, $PlanetFace2, $PlanetFace3, $PlanetFace4, $PlanetFace5, $PlanetFace6]
@@ -13,7 +15,10 @@ var threads : Array[ContinuousThread] = []
 
 @export var sync_data : Dictionary = {}
 
-var cd = 0
+@export var cd : float = 0
+func get_system_pos() -> float:
+	if is_moon(): return orbit_around.get_system_pos()
+	return cd
 var orbit_time = 0
 var p = 0
 
@@ -24,9 +29,9 @@ func _ready() -> void:
 	scale = Vector3(s,s,s)
 	if !show_planet:
 		position.x = cd
+		orbit_time = position.x/74.0
 		if pt.yd == 0:
-			pt.yd = int(position.x/74)
-		orbit_time = float(pt.yd)
+			pt.yd = int(orbit_time)
 		if Global.is_host:
 			sync_data = get_save_data()
 		else:
@@ -41,7 +46,18 @@ func _ready() -> void:
 		
 	else:
 		process_mode = Node.PROCESS_MODE_DISABLED
-	atmosphere.set_instance_shader_parameter("a",data.atmosphere)
+	atmosphere.set_instance_shader_parameter("a",data.atmosphere if data.type == 0 else 0.0)
+	rotation_degrees.x = randf_range(-5,5)
+	update_ring()
+
+func update_ring():
+	if !ring_data.is_empty():
+		ring.visible = true
+		ring.set_instance_shader_parameter("start",ring_data[0])
+		ring.set_instance_shader_parameter("size",ring_data[1])
+		ring.set_instance_shader_parameter("color",ring_data[2])
+	else:
+		ring.visible = false
 
 func _physics_process(delta: float) -> void:
 	for thread in threads:
@@ -54,7 +70,8 @@ func _physics_process(delta: float) -> void:
 	atmosphere.visible = Global.atmosphere_visible
 	#sync_data = get_save_data()
 
-
+func is_moon():
+	return orbit_around is Planet
 
 var pt : PlanetTime = PlanetTime.new()
 var tex_update = false
@@ -69,7 +86,10 @@ func update():
 				t = nt - last_t
 			else:
 				t = nt + (Global.t_limit - last_t)
-			pt.add(t)
+			if is_moon():
+				pt.sync(orbit_around.pt.get_save_data())
+			else:
+				pt.add(t)
 			last_t = nt
 			data.update(t,self)
 			tex_update = true

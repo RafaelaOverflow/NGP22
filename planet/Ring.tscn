@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://ct1rrmdsdx23l"]
+
+[ext_resource type="Shader" uid="uid://d1l3c5qxp6swm" path="res://planet/Ring.gdshader" id="1_ea6bt"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_omqi1"]
+size = Vector2(20, 20)
+
+[sub_resource type="Gradient" id="Gradient_ea6bt"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ea6bt"]
+seed = 20
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3wcvi"]
+height = 1
+color_ramp = SubResource("Gradient_ea6bt")
+noise = SubResource("FastNoiseLite_ea6bt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3wcvi"]
+render_priority = 0
+shader = ExtResource("1_ea6bt")
+shader_parameter/ring_tex = SubResource("NoiseTexture2D_3wcvi")
+
+[node name="Ring" type="MeshInstance3D"]
+instance_shader_parameters/color = Color(1, 1, 1, 1)
+instance_shader_parameters/size = 1.0
+instance_shader_parameters/start = 1.0
+mesh = SubResource("PlaneMesh_omqi1")
+surface_material_override/0 = SubResource("ShaderMaterial_3wcvi")

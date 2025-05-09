@@ -85,7 +85,7 @@ script = ExtResource("3_mwg51")
 start = 10000.0
 limit = 299190.0
 sub_regions = Array[ExtResource("3_mwg51")]([])
-tags = Array[StringName]([&"gas_giant", &"ring"])
+tags = Array[StringName]([&"gas_giant"])
 metadata/_custom_type_script = "uid://b2p0oafklfo3n"
 
 [sub_resource type="Resource" id="Resource_ge4jc"]
@@ -949,14 +949,6 @@ themes = Dictionary[StringName, Theme]({
 &"pink": ExtResource("18_nhdwa")
 })
 
-[node name="Control" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="Cam" parent="." instance=ExtResource("13_owc86")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.16118, 0, 10.2573)
 near = 0.1
@@ -1048,7 +1040,7 @@ visible = false
 
 [node name="Light" type="OmniLight3D" parent="."]
 shadow_enabled = true
-omni_range = 1e+06
+omni_range = 100000.0
 omni_attenuation = 0.0
 
 [node name="MapSelect" parent="." instance=ExtResource("6_ery7i")]

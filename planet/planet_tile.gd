@@ -128,18 +128,22 @@ func first_pass(_id,sphere_pos,planet_pos:Vector3,data:PlanetData) -> PlanetTile
 	id = _id
 	return self
 
-func second_pass(data):
-	if height > data.ocean_level:
-		#forest = data.atmosphere
-		pass
+func second_pass(data,sub_region:SystemRegion):
+	if height > data.ocean_level and data.atmosphere > 0.5 and &"habitable" in sub_region.tags:
+		forest = humidity
 
 func _normal_color(data = get_data()) -> Color:
 	var color : Color
-	if is_ocean(data):
+	if data.type == PlanetData.GAS_GIANT:
+		return Color.SANDY_BROWN.darkened(cold*0.5)
+	elif is_ocean(data):
 		color = Global.color_ramps.ocean.sample(Util.simplify_range(height,0,data.ocean_level))
 	else:
-		color = Global.color_ramps.surfaceh.sample(humidity)
-		color = color.lerp(Global.color_ramps.green.sample(Util.simplify_range(height,data.ocean_level,1)),forest)
+		color = Global.color_ramps.surfaceh.sample(lerp(0.5,humidity,data.atmosphere))
+		var sr = Util.simplify_range(height,data.ocean_level,1)
+		color = color.darkened(sr*0.4)
+		
+		color = color.lerp(Global.color_ramps.green.sample(sr),forest)
 	if data.ocean_level > 0.1 or data.atmosphere > 0.1: color = color.lerp(Color.WHITE,smoothstep(0.8,1,cold))
 	return color
 

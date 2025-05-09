@@ -58,14 +58,16 @@ func do(delta):
 			
 
 func _physics_process(delta: float) -> void:
-	do.call_deferred(delta)
-	do_physics.call_deferred(delta)
+	#do.call_deferred(delta)
+	#do_physics.call_deferred(delta)
+	do(delta)
+	do_physics(delta)
 
 @onready var panel: Panel = $Label/Panel
 @onready var label: Label = $Label
 func do_physics(delta):
 	var mp = get_viewport().get_mouse_position()
-	ray.target_position = project_local_ray_normal(mp)*100.0
+	ray.target_position = project_local_ray_normal(mp)*10000.0
 	ray.force_raycast_update()
 	var col = ray.get_collider()
 	label.text = ""
@@ -143,10 +145,10 @@ func look(obj,delta):
 		var yaw = mouse_pos.x
 		var pitch = mouse_pos.y
 		mouse_pos = Vector2.ZERO
-		#if using_controller:
-			#var vec = Input.get_vector("look_left","look_right","look_up","look_down")
-			#yaw = vec.x * 100 * delta
-			#pitch = vec.y * 100 * delta
+		if using_controller:
+			var vec = Input.get_vector("look_left","look_right","look_up","look_down")
+			yaw = vec.x * 100 * delta
+			pitch = vec.y * 100 * delta
 		
 		pitch = pitch
 		#totalPitch = clamp(rotation_degrees.x,-p_limit,p_limit)

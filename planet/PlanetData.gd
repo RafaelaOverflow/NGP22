@@ -5,6 +5,12 @@ const normal_map = [Vector3(1,0,0),Vector3(-1,0,0),Vector3(0,1,0),Vector3(0,-1,0
 func get_side(normal):
 	return normal_map.find(normal)
 
+enum {
+	DEFAULT,
+	GAS_GIANT
+}
+
+var type = DEFAULT
 @export var radius = 5000.0
 @export var mesh_resolution = 8
 @export var texture_resolution = 8
@@ -23,9 +29,15 @@ var max_produce : Dictionary[StringName,float] = {}
 var nmax_produce : Dictionary[StringName,float] = {}
 var max_consume : Dictionary[StringName,float] = {}
 var nmax_consume : Dictionary[StringName,float] = {}
-
+var base_temperature = 0.0
 
 func gen_tiles(planet:Planet):
+	var sub_region = Global.system_region.get_sub_region_from_pos(planet.get_system_pos())
+	var must_be_habitable = Global.gen_temp.get("min_hab",1) > 0
+	var is_moon = planet.is_moon()
+	if &"gas_giant" in sub_region.tags and !is_moon:
+		radius *= 50
+		type = GAS_GIANT
 	var wp = weakref(planet)
 	var wd = weakref(self)
 	generating_tiles = true
@@ -45,16 +57,17 @@ func gen_tiles(planet:Planet):
 	var max_height = tiles[Vector3i.ZERO].height
 	var min_height = tiles[Vector3i.ZERO].height
 	var hvalue = 0.0
+	atmosphere = 1.0 if must_be_habitable else Global.random.randf()
 	var tile_count = texture_resolution*texture_resolution*6
 	for tile : PlanetTile in tiles.values():
 		if tile.height > max_height: max_height = tile.height
 		if tile.height < min_height: min_height = tile.height
 		hvalue += tile.humidity
 	hvalue = hvalue/float(tile_count)
-	ocean_level = hvalue
+	ocean_level = hvalue * atmosphere
 	for tile : PlanetTile in tiles.values():
 		tile.height = Util.simplify_range(tile.height,min_height,max_height)
-		tile.second_pass(self)
+		tile.second_pass(self,sub_region)
 		tile.planet_ref = wp
 		tile.data_ref = wd
 	#tiles[Vector3i.ZERO].pops.append(POP.new(100))

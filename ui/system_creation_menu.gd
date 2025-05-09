@@ -4,7 +4,8 @@ extends Control
 
 var info = {
 	"planet_resolution" : 8,
-	"planet_mesh_resolution" : 8,
+	"planet_mesh_resolution" : 32,
+	"moon_percent" : 0.4
 }
 
 func _ready() -> void:
@@ -67,3 +68,11 @@ func _planet_mesh_resolution_value_changed(value: float) -> void:
 func _show_planet_forest_toggled(toggled_on: bool) -> void:
 	info.show_planet_forest = toggled_on
 	update_show_planet()
+
+
+func _planet_count(value: float) -> void:
+	info.planet_amount = int(value)
+
+
+func _moon_percent(value: float) -> void:
+	info.moon_percent = (value*0.01)
